@@ -71,7 +71,7 @@ class TemplatesController < ApplicationController
 				shipvia = "FE 2 DAY"
 			end
 
-			if shipvia = "Delivery option - Fedex Overnight"
+			if shipvia == "Delivery option - Fedex Overnight"
 				shipvia = "FE STD OVRNIGHT"
 			end
 
