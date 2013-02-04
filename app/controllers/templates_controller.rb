@@ -60,8 +60,28 @@ class TemplatesController < ApplicationController
 			shiptostate = orders_export[orders_line].shiptostate
 			shiptozipcode = orders_export[orders_line].shiptozipcode
 			shiptocountrycode = orders_export[orders_line].shiptocountrycode
+			shipvia = orders_export[orders_line].shipvia
 
-			# populate the table
+			# Map the shipping info
+			if shipvia == "Delivery option - Fedex Groud"
+				shipvia = "FE GROUND"
+			end
+
+			if shipvia == "Delivery option - Fedex 2-day"
+				shipvia = "FE 2 DAY"
+			end
+
+			if shipvia = "Delivery option - Fedex Overnight"
+				shipvia = "FE STD OVRNIGHT"
+			end
+
+			# Map the ARDivision info
+			if ardivisionno == "NOT LOGGED IN" or ardivisionno == "General"
+				ardivisionno = "00"
+			end
+			# Got to add the retail (01) and trade (02) divisions
+
+			# Populate the table
 			com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
