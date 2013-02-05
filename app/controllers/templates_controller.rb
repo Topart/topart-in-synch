@@ -136,7 +136,7 @@ class TemplatesController < ApplicationController
 		while !orders_export[orders_line].nil? do
 			
 			salesorderno = orders_export[orders_line].salesorderno
-			sequenceno = orders_export[orders_line].sequenceNo
+			sequenceno = orders_export[orders_line].sequenceno
 			itemcode = orders_export[orders_line].itemcode
 			itemtype = orders_export[orders_line].itemtype
 			quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
