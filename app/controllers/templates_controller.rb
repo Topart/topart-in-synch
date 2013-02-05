@@ -86,6 +86,7 @@ class TemplatesController < ApplicationController
 			record = com_tomas_so_salesorderhdr.where(:salesorderno => salesorderno)
 
 			if !record.empty?
+				# Update existing records
 				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:shipvia => shipvia,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
@@ -161,6 +162,7 @@ class TemplatesController < ApplicationController
 			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno)
 
 			if !record.empty?
+				# Update existing records
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
 					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice)
 			else
