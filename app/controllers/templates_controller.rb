@@ -85,7 +85,7 @@ class TemplatesController < ApplicationController
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_tomas_so_salesorderhdr.where(:salesorderno => salesorderno)
 
-			if com_tomas_so_salesorderhdr.select(1).where(record.exists)
+			if !record.empty?
 				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:shipvia => shipvia,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
