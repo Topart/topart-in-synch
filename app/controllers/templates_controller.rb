@@ -35,10 +35,11 @@ class TemplatesController < ApplicationController
 
 		# Finally, execute the SQL query on the middle-tier database
 		# connect to an in-memory database
-		db_connection = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		#db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
 		# create a dataset from the items table
-		com_tomas_so_salesorderhdr = db_connection[:com_tomas_so_salesorderhdr]
+		com_tomas_so_salesorderhdr = db_connection_test[:com_tomas_so_salesorderhdr]
 
 
 		while !orders_export[orders_line].nil? do
@@ -127,10 +128,11 @@ class TemplatesController < ApplicationController
 
 
 		# Finally, execute the SQL query on the middle-tier database
-		db_connection = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		#db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
 		# create a dataset from the items table
-		com_tomas_so_salesorderdetl = db_connection[:com_tomas_so_salesorderdetl]
+		com_tomas_so_salesorderdetl = db_connection_test[:com_tomas_so_salesorderdetl]
 
 
 		while !orders_export[orders_line].nil? do
