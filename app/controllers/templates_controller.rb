@@ -82,12 +82,25 @@ class TemplatesController < ApplicationController
 			end
 			# Got to add the retail (01) and trade (02) divisions
 
+			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
+			record = com_tomas_so_salesorderhdr.where(:salesorderno => salesorderno)
+
+			if com_tomas_so_salesorderhdr.select(1).where(record.exists)
+				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
+				:shipvia => shipvia,
+				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
+				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
+				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
+			else
+
 			# Populate the table
 			com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:shipvia => shipvia,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
+
+			end
 
 			orders_line += 1
 
