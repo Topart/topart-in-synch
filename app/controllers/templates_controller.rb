@@ -57,14 +57,20 @@ class TemplatesController < ApplicationController
 			taxschedule = orders_export[orders_line].taxschedule
 
 			billtoname = orders_export[orders_line].billtoname
+
 			billtoaddress1 = orders_export[orders_line].billtoaddress1
+			billtoaddress2 = orders_export[orders_line].billtoaddress2
+			billtoaddress3 = orders_export[orders_line].billtoaddress3
 			billtocity = orders_export[orders_line].billtocity
 
 			billtostate = orders_export[orders_line].billtostate
 			billtozipcode = orders_export[orders_line].billtozipcode
 			billtocountrycode = orders_export[orders_line].billtocountrycode
 			shiptoname = orders_export[orders_line].shiptoname
+
 			shiptoaddress1 = orders_export[orders_line].shiptoaddress1
+			shiptoaddress2 = orders_export[orders_line].shiptoaddress2
+			shiptoaddress3 = orders_export[orders_line].shiptoaddress3
 
 			shiptocity = orders_export[orders_line].shiptocity
 			shiptostate = orders_export[orders_line].shiptostate
@@ -113,16 +119,20 @@ class TemplatesController < ApplicationController
 				# Update existing records
 				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:shipvia => shipvia,
-				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
-				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
+				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
+				:billtocity => billtocity, :billtostate => billtostate,
+				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1, 
+				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
 			else
 
 			# Populate the table
 			com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
 				:shipvia => shipvia,
-				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtocity => billtocity, :billtostate => billtostate,
+				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
+				:billtocity => billtocity, :billtostate => billtostate,
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
+				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
 
 			end
