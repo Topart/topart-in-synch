@@ -35,33 +35,53 @@ class TemplatesController < ApplicationController
 
 		# Finally, execute the SQL query on the middle-tier database
 		# connect to an in-memory database
-		db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
-		#db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
+		#db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
 		# create a dataset from the items table
-		com_tomas_so_salesorderhdr = db_connection_test[:com_tomas_so_salesorderhdr]
-
+		com_tomas_so_salesorderhdr = db_connection_production[:com_tomas_so_salesorderhdr]
+		#frommasar_customer = db_connection_production[:frommasar_customer]
 
 		while !orders_export[orders_line].nil? do
 			
+			customerid = orders_export[orders_line].customerid
+			customerpono = orders_export[orders_line].customerpono
 			salesorderno = orders_export[orders_line].salesorderno
 			orderdate = orders_export[orders_line].orderdate
 			emailaddress = orders_export[orders_line].emailaddress
+
 			ardivisionno = orders_export[orders_line].ardivisionno
+			shipvia = orders_export[orders_line].shipvia
 			paymenttype = orders_export[orders_line].paymenttype
+			wharehousecode = orders_export[orders_line].wharehousecode
+			taxschedule = orders_export[orders_line].taxschedule
+
 			billtoname = orders_export[orders_line].billtoname
 			billtoaddress1 = orders_export[orders_line].billtoaddress1
 			billtocity = orders_export[orders_line].billtocity
+
 			billtostate = orders_export[orders_line].billtostate
 			billtozipcode = orders_export[orders_line].billtozipcode
 			billtocountrycode = orders_export[orders_line].billtocountrycode
 			shiptoname = orders_export[orders_line].shiptoname
 			shiptoaddress1 = orders_export[orders_line].shiptoaddress1
+
 			shiptocity = orders_export[orders_line].shiptocity
 			shiptostate = orders_export[orders_line].shiptostate
 			shiptozipcode = orders_export[orders_line].shiptozipcode
 			shiptocountrycode = orders_export[orders_line].shiptocountrycode
-			shipvia = orders_export[orders_line].shipvia
+			
+			customerno = ""
+
+			# If the customer id already exists in the frommasar_customer table where the email address is the same, use that as CustomerNO
+			db_connection_production.fetch("SELECT customerno FROM frommasar_customer WHERE emailaddress = ?", emailaddress) do |row|
+  				customerno = row[:customerno]
+			end
+
+			# otherwise, we fill the Magento customer id with leading 0's
+			if customerno.empty?
+				customerno = customerid
+			end
 
 			# Map the shipping info
 			if shipvia == "Delivery option - Fedex Groud"
@@ -142,11 +162,11 @@ class TemplatesController < ApplicationController
 
 
 		# Finally, execute the SQL query on the middle-tier database
-		db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
-		#db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
+		#db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
+		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
 		# create a dataset from the items table
-		com_tomas_so_salesorderdetl = db_connection_test[:com_tomas_so_salesorderdetl]
+		com_tomas_so_salesorderdetl = db_connection_production[:com_tomas_so_salesorderdetl]
 
 
 		while !orders_export[orders_line].nil? do
