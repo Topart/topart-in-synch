@@ -96,6 +96,10 @@ class TemplatesController < ApplicationController
 				shipvia = "FE STD OVRNIGHT"
 			end
 
+			if shipvia == "Free Shipping - Free"
+				shipvia = "FREE"
+			end
+
 			# Map the ARDivision info
 			if ardivisionno == "NOT LOGGED IN" or ardivisionno == "General"
 				ardivisionno = "00"
