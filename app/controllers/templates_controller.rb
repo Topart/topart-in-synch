@@ -53,7 +53,7 @@ class TemplatesController < ApplicationController
 			ardivisionno = orders_export[orders_line].ardivisionno
 			shipvia = orders_export[orders_line].shipvia
 			paymenttype = orders_export[orders_line].paymenttype
-			wharehousecode = orders_export[orders_line].wharehousecode
+			warehousecode = orders_export[orders_line].warehousecode
 			taxschedule = orders_export[orders_line].taxschedule
 
 			billtoname = orders_export[orders_line].billtoname
@@ -124,7 +124,7 @@ class TemplatesController < ApplicationController
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1, 
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:wharehousecode => wharehousecode, :taxschedule => taxschedule)
+				:warehousecode => warehousecode, :taxschedule => taxschedule)
 			else
 
 			# Populate the table
@@ -135,7 +135,7 @@ class TemplatesController < ApplicationController
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:wharehousecode => wharehousecode, :taxschedule => taxschedule)
+				:warehousecode => warehousecode, :taxschedule => taxschedule)
 
 			end
 
