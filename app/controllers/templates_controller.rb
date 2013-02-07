@@ -118,22 +118,24 @@ class TemplatesController < ApplicationController
 			if !record.empty?
 				# Update existing records
 				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
-				:shipvia => shipvia,
+				:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
 				:billtocity => billtocity, :billtostate => billtostate,
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1, 
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
-				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
+				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
+				:wharehousecode => wharehousecode, :taxschedule => taxschedule)
 			else
 
 			# Populate the table
 			com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
-				:shipvia => shipvia,
+				:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
 				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
 				:billtocity => billtocity, :billtostate => billtostate,
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
-				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode)
+				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
+				:wharehousecode => wharehousecode, :taxschedule => taxschedule)
 
 			end
 
