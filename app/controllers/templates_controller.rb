@@ -174,7 +174,7 @@ class TemplatesController < ApplicationController
 		end
 		
 
-		orders_line = 2
+		orders_line = 0
 
 
 		# Finally, execute the SQL query on the middle-tier database
