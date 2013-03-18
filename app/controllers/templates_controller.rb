@@ -30,7 +30,7 @@ class TemplatesController < ApplicationController
 		end
 		
 
-		orders_line = 2
+		orders_line = 0
 
 
 		# Finally, execute the SQL query on the middle-tier database
@@ -207,8 +207,6 @@ class TemplatesController < ApplicationController
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
 				:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
 			end
-
-			p itemcode
 
 			orders_line += 1
 
