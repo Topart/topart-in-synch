@@ -195,7 +195,7 @@ class TemplatesController < ApplicationController
 			originalunitprice = orders_export[orders_line].originalunitprice
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
-			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno)
+			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno, :itemcode => itemcode)
 
 			if !record.empty?
 				# Update existing records
