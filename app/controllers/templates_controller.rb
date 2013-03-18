@@ -16,7 +16,7 @@ class TemplatesController < ApplicationController
 
 		# Copy the csv file localy through HTTP
 		open('orders_export.csv', 'wb') do |file|
-  			csv_content << open('http://betatopa.nextmp.net/orders_export/ToMAS_SO_SalesOrderHeader.csv').read
+  			csv_content << open('http://topartco.nextmp.net/orders_export/ToMAS_SO_SalesOrderHeader.csv').read
 		end
 
 		file_name = "ToMAS_SO_SalesOrderHeader.csv";
@@ -160,7 +160,7 @@ class TemplatesController < ApplicationController
 
 		# Copy the csv file localy through HTTP
 		open('ToMas_SO_SalesOrderDetail.csv', 'wb') do |file|
-  			csv_content << open('http://betatopa.nextmp.net/orders_export/ToMas_SO_SalesOrderDetail.csv').read
+  			csv_content << open('http://topartco.nextmp.net/orders_export/ToMas_SO_SalesOrderDetail.csv').read
 		end
 
 		file_name = "ToMas_SO_SalesOrderDetail.csv";
