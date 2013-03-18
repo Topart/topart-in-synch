@@ -190,6 +190,7 @@ class TemplatesController < ApplicationController
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
 			itemcode = orders_export[orders_line].itemcode
+			itemcodedesc = orders_export[orders_line].itemcodedesc
 			itemtype = orders_export[orders_line].itemtype
 			quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
 			originalunitprice = orders_export[orders_line].originalunitprice
@@ -200,12 +201,12 @@ class TemplatesController < ApplicationController
 
 			if !record.empty?
 				# Update existing records
-				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
+				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
 					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
 			else
 				# Populate the table
-				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
-				:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
+				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
+					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
 			end
 
 			orders_line += 1
