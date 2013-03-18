@@ -200,11 +200,11 @@ class TemplatesController < ApplicationController
 			if !record.empty?
 				# Update existing records
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
-					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice)
+					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => "Y")
 			else
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemtype => itemtype,
-				:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice)
+				:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => "Y")
 			end
 
 			orders_line += 1
