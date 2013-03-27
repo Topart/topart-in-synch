@@ -195,6 +195,8 @@ class TemplatesController < ApplicationController
 			quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
 			originalunitprice = orders_export[orders_line].originalunitprice
 			dropship = "Y"
+
+			substrate = orders_export[orders_line].substrate
 			width = orders_export[orders_line].width
 			height = orders_export[orders_line].length
 			border = orders_export[orders_line].border
@@ -210,11 +212,13 @@ class TemplatesController < ApplicationController
 				# Update existing records
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
 					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
+					:substrate => substrate,
 					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link)
 			else
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
+					:substrate => substrate,
 					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link)
 			end
 
