@@ -195,6 +195,8 @@ class TemplatesController < ApplicationController
 			quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
 			originalunitprice = orders_export[orders_line].originalunitprice
 			dropship = "Y"
+			width = orders_export[orders_line].width
+			height = orders_export[orders_line].length
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno, :itemcode => itemcode)
@@ -202,11 +204,13 @@ class TemplatesController < ApplicationController
 			if !record.empty?
 				# Update existing records
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
-					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
+					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
+					:width => width, :width => width)
 			else
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
-					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship)
+					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
+					:height => dropship, :height => height)
 			end
 
 			orders_line += 1
