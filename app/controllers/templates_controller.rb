@@ -199,11 +199,15 @@ class TemplatesController < ApplicationController
 			substrate = orders_export[orders_line].substrate
 			width = orders_export[orders_line].width
 			height = orders_export[orders_line].length
+			
 			border = orders_export[orders_line].border
 			fs = orders_export[orders_line].fs
 			embellish = orders_export[orders_line].embellish
 			wrap = orders_export[orders_line].wrap
 			link = orders_export[orders_line].link
+
+			covering = orders_export[orders_line].covering
+			edge = orders_export[orders_line].edge
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno, :sequenceno => sequenceno)
@@ -213,13 +217,15 @@ class TemplatesController < ApplicationController
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
 					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
-					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link)
+					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
+					:covering => covering, :edge => edge)
 			else
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
-					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link)
+					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
+					:covering => covering, :edge => edge)
 			end
 
 			orders_line += 1
