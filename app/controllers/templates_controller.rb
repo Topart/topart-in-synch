@@ -210,7 +210,7 @@ class TemplatesController < ApplicationController
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
-					:height => dropship, :height => height)
+					:width => width, :height => height)
 			end
 
 			orders_line += 1
