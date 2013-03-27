@@ -205,7 +205,7 @@ class TemplatesController < ApplicationController
 				# Update existing records
 				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
 					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
-					:width => width, :width => width)
+					:width => width, :height => height)
 			else
 				# Populate the table
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
