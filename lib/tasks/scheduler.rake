@@ -16,3 +16,11 @@ task :orders_detail_export => :environment do
 
 end
 
+task :products_export => :environment do
+	
+	puts "Products export started."
+	puts "COPY (SELECT * FROM im1_inventorymasterfile ) TO STDOUT with CSV HEADER" | psql -o '/tmp/source.csv' d1uoa7pu2d1ssk
+	puts "Products export completed."
+
+end
+

@@ -185,7 +185,7 @@ class TemplatesController < ApplicationController
 		com_tomas_so_salesorderdetl = db_connection_production[:com_tomas_so_salesorderdetl]
 
 
-		while !orders_export[orders_line].salesorderno.nil? do
+		while !orders_export[orders_line].nil? do
 			
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
