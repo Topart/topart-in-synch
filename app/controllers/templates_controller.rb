@@ -8,6 +8,30 @@ class TemplatesController < ApplicationController
 
 	include CsvMapper
 
+
+
+
+	def products_export
+
+		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
+		# create a dataset from the items table
+		im1_inventorymasterfile = db_connection_production[:im1_inventorymasterfile]
+
+		file_name = "source_template.csv";
+		csv_file = File.open(file_name, "w")
+		csv_content = ""
+
+		db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile") do |row|
+			csv_content <<	row
+		end
+
+		csv_file.puts csv_content
+		csv_file.close
+ 
+
+	end
+
+
 	# GET /generate_template
 	# GET /generate_template.json
 	def to_mas_so_sales_order_header
