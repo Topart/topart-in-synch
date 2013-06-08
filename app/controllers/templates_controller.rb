@@ -27,7 +27,7 @@ class TemplatesController < ApplicationController
 		
 		@csv_array.each do |row|
 
-			csv_content << row
+			csv_content << row[:itemnumber]
 
 		end
 
