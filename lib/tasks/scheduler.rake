@@ -16,3 +16,13 @@ task :orders_detail_export => :environment do
 
 end
 
+
+task :products_export => :environment do
+	
+	puts "Products export started."
+	TemplatesController.new.products_export
+	puts "Products export completed."
+
+end
+
+
