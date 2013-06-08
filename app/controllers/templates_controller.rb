@@ -17,7 +17,7 @@ class TemplatesController < ApplicationController
 		# create a dataset from the items table
 		im1_inventorymasterfile = db_connection_production[:im1_inventorymasterfile]
 
-		file_name = "source_template.csv";
+		file_name = "tmp/source_template.csv";
 		csv_file = File.open(file_name, "w")
 		csv_content = ""
 
