@@ -23,6 +23,8 @@ class TemplatesController < ApplicationController
 
 		db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile") do |row|
 			csv_content <<	row
+
+			p row
 		end
 
 		csv_file.puts csv_content
