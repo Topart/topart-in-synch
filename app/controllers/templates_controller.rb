@@ -21,13 +21,13 @@ class TemplatesController < ApplicationController
 		csv_file = File.open(file_name, "w")
 		csv_content = ""
 
-		product_counter = 0
+		#product_counter = 0
 
-		db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile") do |row|
+		db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile WHERE itemnumber='DBK 6648'") do |row|
 			csv_content <<	row
 
-			product_counter = product_counter + 1
-			p product_counter
+			#product_counter = product_counter + 1
+			#p product_counter
 		end
 
 		csv_file.puts csv_content
