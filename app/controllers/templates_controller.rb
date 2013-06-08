@@ -23,11 +23,12 @@ class TemplatesController < ApplicationController
 
 		#product_counter = 0
 
-		db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile WHERE itemnumber='DBK 6648'") do |row|
-			csv_content <<	row
+		@csv_array = db_connection_production.fetch("SELECT * FROM im1_inventorymasterfile WHERE itemnumber='DBK 6648'").all
+		
+		@csv_array.each do |row|
 
-			#product_counter = product_counter + 1
-			#p product_counter
+			csv_content << row
+
 		end
 
 		csv_file.puts csv_content
