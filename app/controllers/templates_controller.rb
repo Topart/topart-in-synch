@@ -266,9 +266,9 @@ class TemplatesController < ApplicationController
 		puts "Item count: #{com_tomas_so_salesorderdetl.count}"
  
 		# Accessing this view launch the service automatically
-		respond_to do |format|
-			format.html # index.html.erb
-		end
+		#respond_to do |format|
+		#	format.html # index.html.erb
+		#end
 
 	end
 
