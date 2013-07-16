@@ -219,6 +219,8 @@ class TemplatesController < ApplicationController
 			
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
+			p sequenceno
+			p ""
 			itemcode = orders_export[orders_line].itemcode
 			itemcodedesc = orders_export[orders_line].itemcodedesc
 			itemtype = orders_export[orders_line].itemtype
