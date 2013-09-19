@@ -214,9 +214,13 @@ class TemplatesController < ApplicationController
 		# create a dataset from the items table
 		com_tomas_so_salesorderdetl = db_connection_production[:com_tomas_so_salesorderdetl]
 
+		# create a dataset from the from MAS sales order history header table. Used to avoid data re-population
+		com_frommas_so_salesorderhisthdr = db_connection_production[:com_frommas_so_salesorderhisthdr]
+
 
 		while !orders_export[orders_line].nil? do
 			
+			weborderid = orders_export[orders_line].weborderid
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
 			p sequenceno
@@ -242,18 +246,11 @@ class TemplatesController < ApplicationController
 			edge = orders_export[orders_line].edge
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
-			record = com_tomas_so_salesorderdetl.where(:salesorderno => salesorderno, :sequenceno => sequenceno)
+			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
-			if !record.empty?
-				# Update existing records
-				record.update(:sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, :itemtype => itemtype,
-					:quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
-					:substrate => substrate,
-					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge)
-			else
-				# Populate the table
-				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
+			# If there is no record in InSynch with the same WebOrderId, then populate the database with this record
+			if record.empty?
+				com_tomas_so_salesorderdetl.insert(:weborderid => weborderid, :salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
