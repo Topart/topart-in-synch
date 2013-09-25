@@ -9,7 +9,7 @@ class TemplatesController < ApplicationController
 	include CsvMapper
 
 
-
+	retail_master = ""
 
 	def products_export
 
@@ -182,8 +182,6 @@ class TemplatesController < ApplicationController
 		end
 
 	end
-
-	retail_master = ""
 
 	def pick_retail_sheet(sku_code)
 		
