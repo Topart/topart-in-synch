@@ -281,6 +281,16 @@ class TemplatesController < ApplicationController
 			# Info needed to retrieve the correct UI cost: image source, sku
 
 			image_ui = width + height
+			fsm_width = 0
+			fsm_height = 0
+
+			if width.include?('.')
+				fsm_width = width - width.to_i
+			end
+
+			if height.include?('.')
+				fsm_height = height - height.to_i
+			end
 
 			udf_imsource = ""
   			udf_ratiodec = ""
@@ -339,8 +349,8 @@ class TemplatesController < ApplicationController
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
-					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge, :uicost => uicost)
+					:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
+					:covering => covering, :edge => edge, :uicost => uicost, :fsm_width => fsm_width, :fsm_height => fsm_height)
 			end
 
 			orders_line += 1
