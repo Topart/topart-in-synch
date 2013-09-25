@@ -183,6 +183,31 @@ class TemplatesController < ApplicationController
 
 	end
 
+	retail_master = ""
+
+	def pick_retail_sheet(sku_code)
+		
+		retail_csv_content = ""
+
+		open('retail_master.csv', 'wb') do |file|
+
+			if sku_code == "PR"
+  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
+  			end
+		end
+
+		retail_file_name = "retail_master_paper.csv";
+		retail_csv_file = File.open(retail_file_name, "w")
+		retail_csv_file.puts retail_csv_content
+		retail_csv_file.close
+
+		# Load the retail csv file
+		retail_master = import(retail_csv_file) do
+		  read_attributes_from_file
+		end
+
+	end
+
 
 	def to_mas_so_sales_order_detail
  
@@ -211,12 +236,18 @@ class TemplatesController < ApplicationController
 		#db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
 		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
-		# create a dataset from the items table
+		# create a dataset from the details table
 		com_tomas_so_salesorderdetl = db_connection_production[:com_tomas_so_salesorderdetl]
 
 		# create a dataset from the from MAS sales order history header table. Used to avoid data re-population
 		com_frommas_so_salesorderhisthdr = db_connection_production[:com_frommas_so_salesorderhisthdr]
 
+		# create a dataset from the items table
+		im1_inventorymasterfile = db_connection_production[:im1_inventorymasterfile]
+
+
+
+		orders_line = 0
 
 		while !orders_export[orders_line].nil? do
 			
@@ -245,6 +276,61 @@ class TemplatesController < ApplicationController
 			covering = orders_export[orders_line].covering
 			edge = orders_export[orders_line].edge
 
+
+
+			# Info needed to retrieve the correct UI cost: image source, sku
+
+			image_ui = width + height
+
+			udf_imsource = ""
+  			udf_ratiodec = ""
+  			udf_entitytype = ""
+
+			db_connection_production.fetch("SELECT udf_imsource, udf_ratiodec, udf_entitytype FROM im1_inventorymasterfile WHERE itemnumber = ?", itemcode) do |row|
+	  			udf_imsource = row[:udf_imsource]
+	  			udf_ratiodec = row[:udf_ratiodec]
+	  			udf_entitytype = row[:udf_entitytype]
+			end
+
+
+			# Scan each line in the correct retail master sheet
+			retail_line = 0
+			uicost = 0
+
+			# Select the correct retail sheet, depending on the substrate
+			pick_retail_sheet(substrate)
+
+			while !retail_master[retail_line].nil? do
+				
+				imagesource = retail_master[retail_line].imagesource
+				ratiodec = retail_master[retail_line].ratiodec
+				ui = retail_master[retail_line].ui
+				imagesqin = retail_master[retail_line].imagesqin
+				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost
+
+
+				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+					if imagesource != "Old World"
+
+						uicost = ui * rolledpapertaruicost
+						break
+
+					else
+
+						uicost = imagesqin * rolledpapertaruicost
+						break
+
+					end
+
+				end
+
+				retail_line = retail_line + 1
+
+			end	
+
+
+
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
@@ -254,7 +340,7 @@ class TemplatesController < ApplicationController
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge)
+					:covering => covering, :edge => edge, :uicost => uicost)
 			end
 
 			orders_line += 1
