@@ -9,8 +9,6 @@ class TemplatesController < ApplicationController
 	include CsvMapper
 
 
-	retail_master = ""
-
 	def products_export
 
 		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
@@ -204,6 +202,8 @@ class TemplatesController < ApplicationController
 		  read_attributes_from_file
 		end
 
+		return retail_master
+
 	end
 
 
@@ -306,7 +306,7 @@ class TemplatesController < ApplicationController
 			uicost = 0
 
 			# Select the correct retail sheet, depending on the substrate
-			pick_retail_sheet(substrate)
+			retail_master = pick_retail_sheet(substrate)
 
 			while !retail_master[retail_line].nil? do
 				
