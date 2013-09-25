@@ -250,7 +250,7 @@ class TemplatesController < ApplicationController
 
 			# If there is no record in InSynch with the same WebOrderId, then populate the database with this record
 			if record.empty?
-				com_tomas_so_salesorderdetl.insert(:weborderid => weborderid, :salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
+				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width, :height => height, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
