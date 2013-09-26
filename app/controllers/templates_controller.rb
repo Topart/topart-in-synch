@@ -72,6 +72,7 @@ class TemplatesController < ApplicationController
 
 		while !orders_export[orders_line].nil? do
 			
+			weborderid = orders_export[orders_line].weborderid
 			customerid = orders_export[orders_line].customerid
 			customerpono = orders_export[orders_line].customerpono
 			salesorderno = orders_export[orders_line].salesorderno
@@ -152,7 +153,7 @@ class TemplatesController < ApplicationController
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1, 
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:warehousecode => warehousecode, :taxschedule => taxschedule)
+				:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
 			else
 
 			# Populate the table
@@ -163,7 +164,7 @@ class TemplatesController < ApplicationController
 				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
 				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
 				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:warehousecode => warehousecode, :taxschedule => taxschedule)
+				:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
 
 			end
 
