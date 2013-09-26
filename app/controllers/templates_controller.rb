@@ -317,39 +317,31 @@ class TemplatesController < ApplicationController
 			while !retail_master[retail_line].nil? do
 				
 				imagesource = retail_master[retail_line].imagesource
-				ratiodec = retail_master[retail_line].ratiodec.to_f
+				ratiodec = retail_master[retail_line].ratiodec
 				ui = retail_master[retail_line].ui.to_i
 				imagesqin = retail_master[retail_line].imagesqin.to_f
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
-
-				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-					p "imagesource"
+				p "imagesource"
 					p imagesource
 					p "ratiodec"
 					p ratiodec
 					p "ui"
 					p ui
 
+
+				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+					p "match"
+
 					if imagesource != "Old World"
 
 						unitcost = ui * rolledpapertaruicost
-						p ui
-						p rolledpapertaruicost
-						p unitcost
-						p " "
-
 						break
 
 					else
 
 						unitcost = imagesqin * rolledpapertaruicost
-						p imagesqin
-						p rolledpapertaruicost
-						p unitcost
-						p " "
-
 						break
 
 					end
