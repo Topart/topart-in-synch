@@ -10,9 +10,9 @@ class TemplatesController < ApplicationController
 
 	def truncate_digits(number, digits)
 
-		a = ( (number * 10**digits).to_i ) / (10**digits)
+		a = (( (number * 10**digits).to_i ) / (10**digits)).to_f
 		b = a.to_i
-		c = a - b
+		c = (a - b).to_f
 
 		p a
 		p b
@@ -299,10 +299,14 @@ class TemplatesController < ApplicationController
 
 			if width.include?('.')
 				fsm_width = truncate_digits(width.to_f, 2)
+			else
+				fsm_width = 0
 			end
 
 			if height.include?('.')
 				fsm_height = truncate_digits(height.to_f, 2)
+			else
+				fsm_height = 0
 			end
 
 			udf_imsource = ""
