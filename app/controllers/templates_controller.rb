@@ -303,7 +303,7 @@ class TemplatesController < ApplicationController
 
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
-			uicost = 0
+			unitcost = 0
 
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(substrate)
@@ -321,12 +321,12 @@ class TemplatesController < ApplicationController
 
 					if imagesource != "Old World"
 
-						uicost = ui * rolledpapertaruicost
+						unitcost = ui * rolledpapertaruicost
 						break
 
 					else
 
-						uicost = imagesqin * rolledpapertaruicost
+						unitcost = imagesqin * rolledpapertaruicost
 						break
 
 					end
@@ -348,7 +348,7 @@ class TemplatesController < ApplicationController
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge, :uicost => uicost, :fsm_width => fsm_width, :fsm_height => fsm_height)
+					:covering => covering, :edge => edge, :unitcost => unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
 			end
 
 			orders_line += 1
