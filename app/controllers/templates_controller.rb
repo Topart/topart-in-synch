@@ -14,7 +14,13 @@ class TemplatesController < ApplicationController
 		b = a.to_i
 		c = a - b
 
+		p a
+		p b
+		p c
+
 		result = c * 10**digits
+
+		p result
 
 		return result
 
@@ -293,12 +299,10 @@ class TemplatesController < ApplicationController
 
 			if width.include?('.')
 				fsm_width = truncate_digits(width.to_f, 2)
-				p fsm_width
 			end
 
 			if height.include?('.')
 				fsm_height = truncate_digits(height.to_f, 2)
-				p fsm_height
 			end
 
 			udf_imsource = ""
