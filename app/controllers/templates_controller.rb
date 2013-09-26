@@ -35,11 +35,6 @@ class TemplatesController < ApplicationController
 
 	end
 
-	def round_to( decimals=0 )
-		factor = 10.0**decimals
-		(self*factor).round / factor
-	end
-
 
 	# GET /generate_template
 	# GET /generate_template.json
@@ -288,11 +283,11 @@ class TemplatesController < ApplicationController
 			fsm_height = 0
 
 			if width.include?('.')
-				fsm_width = width.round_to(2) - width.to_i
+				fsm_width = ("%0.2f" % width).to_i
 			end
 
 			if height.include?('.')
-				fsm_height = height.round_to(2) - height.to_i
+				fsm_height = ("%0.2f" % height).to_i
 			end
 
 			udf_imsource = ""
