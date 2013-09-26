@@ -283,14 +283,14 @@ class TemplatesController < ApplicationController
 			fsm_height = 0
 
 			if width.include?('.')
-				fsm_width = width.to_f.round(2) - width.to_i
+				fsm_width = width.round(2) - width.to_i
 				p "fsm_width"
 				p fsm_width
 				p " "
 			end
 
 			if height.include?('.')
-				fsm_height = height.to_f.round(2) - height.to_i
+				fsm_height = height.round(2) - height.to_i
 				p "fsm_height"
 				p fsm_height
 				p " "
@@ -321,6 +321,18 @@ class TemplatesController < ApplicationController
 				ui = retail_master[retail_line].ui
 				imagesqin = retail_master[retail_line].imagesqin
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost
+
+				if imagesource == udf_imsource
+					p "source match"
+				end
+
+				if ratiodec == udf_ratiodec
+					p "ratio match"
+				end
+
+				if ui == image_ui
+					p "UI match"
+				end
 
 
 				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
