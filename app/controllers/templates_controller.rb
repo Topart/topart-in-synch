@@ -283,11 +283,11 @@ class TemplatesController < ApplicationController
 			fsm_height = 0
 
 			if width.include?('.')
-				fsm_width = number_with_precision(width.to_f, :precision => 2) - width.to_i
+				fsm_width = width.to_f - width.to_i
 			end
 
 			if height.include?('.')
-				fsm_height = number_with_precision(height.to_f, :precision => 2) - height.to_i
+				fsm_height = height.to_f - height.to_i
 			end
 
 			udf_imsource = ""
