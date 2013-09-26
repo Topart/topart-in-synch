@@ -293,10 +293,12 @@ class TemplatesController < ApplicationController
 
 			if width.include?('.')
 				fsm_width = truncate_digits(width.to_f, 2)
+				p fsm_width
 			end
 
 			if height.include?('.')
 				fsm_height = truncate_digits(height.to_f, 2)
+				p fsm_height
 			end
 
 			udf_imsource = ""
@@ -325,8 +327,6 @@ class TemplatesController < ApplicationController
 				imagesqin = retail_master[retail_line].imagesqin.to_f
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
-
-				p udf_entitytype
 
 				if udf_entitytype == "Poster" or udf_entitytype == "Image"
 
