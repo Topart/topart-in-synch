@@ -302,7 +302,7 @@ class TemplatesController < ApplicationController
 
 			db_connection_production.fetch("SELECT udf_imsource, udf_ratiodec, udf_entitytype FROM im1_inventorymasterfile WHERE itemnumber = ?", itemcode) do |row|
 	  			udf_imsource = row[:udf_imsource]
-	  			udf_ratiodec = row[:udf_ratiodec]
+	  			udf_ratiodec = row[:udf_ratiodec].to_f
 	  			udf_entitytype = row[:udf_entitytype]
 			end
 
@@ -317,7 +317,7 @@ class TemplatesController < ApplicationController
 			while !retail_master[retail_line].nil? do
 				
 				imagesource = retail_master[retail_line].imagesource
-				ratiodec = retail_master[retail_line].ratiodec
+				ratiodec = retail_master[retail_line].ratiodec.to_f
 				ui = retail_master[retail_line].ui.to_i
 				imagesqin = retail_master[retail_line].imagesqin.to_f
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
