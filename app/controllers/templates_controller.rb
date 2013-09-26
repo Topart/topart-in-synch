@@ -253,7 +253,7 @@ class TemplatesController < ApplicationController
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
 			p sequenceno
-			p ""
+			
 			itemcode = orders_export[orders_line].itemcode
 			itemcodedesc = orders_export[orders_line].itemcodedesc
 			itemtype = orders_export[orders_line].itemtype
@@ -284,16 +284,10 @@ class TemplatesController < ApplicationController
 
 			if width.include?('.')
 				fsm_width = width.round_to(2) - width.to_i
-				p "fsm_width"
-				p fsm_width
-				p " "
 			end
 
 			if height.include?('.')
 				fsm_height = height.round_to(2) - height.to_i
-				p "fsm_height"
-				p fsm_height
-				p " "
 			end
 
 			udf_imsource = ""
