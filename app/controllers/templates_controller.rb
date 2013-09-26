@@ -283,11 +283,17 @@ class TemplatesController < ApplicationController
 			fsm_height = 0
 
 			if width.include?('.')
-				fsm_width = width.to_f - width.to_i
+				fsm_width = width.to_f.round(2) - width.to_i
+				p "fsm_width"
+				p fsm_width
+				p " "
 			end
 
 			if height.include?('.')
-				fsm_height = height.to_f - height.to_i
+				fsm_height = height.to_f.round(2) - height.to_i
+				p "fsm_height"
+				p fsm_height
+				p " "
 			end
 
 			udf_imsource = ""
@@ -316,25 +322,25 @@ class TemplatesController < ApplicationController
 				imagesqin = retail_master[retail_line].imagesqin
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost
 
-				#p "From Retail"
+				p "From Retail"
 
-				#p "imagesource"
-				#p imagesource
-				#p "ratiodec"
-				#p ratiodec
-				#p "ui"
-				#p ui
+				p "imagesource"
+				p imagesource
+				p "ratiodec"
+				p ratiodec
+				p "ui"
+				p ui
 
-				#p " "
+				p " "
 
-				#p " From database "
+				p " From database "
 
-				#p "udf_imsource"
-				#p udf_imsource
-				#p "udf_ratiodec"
-				#p udf_ratiodec
-				#p "image_ui"
-				#p image_ui
+				p "udf_imsource"
+				p udf_imsource
+				p "udf_ratiodec"
+				p udf_ratiodec
+				p "image_ui"
+				p image_ui
 
 				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
