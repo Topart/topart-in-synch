@@ -8,6 +8,18 @@ class TemplatesController < ApplicationController
 
 	include CsvMapper
 
+	def truncate_digits(number, digits)
+
+		a = ( (number * 10**digits).to_i ) / (10**digits)
+		b = a.to_i
+		c = a - b
+
+		result = c * 10**digits
+
+		return result
+
+	end
+
 
 	def products_export
 
@@ -280,11 +292,11 @@ class TemplatesController < ApplicationController
 			fsm_height = 0
 
 			if width.include?('.')
-				fsm_width = width.to_f - width.to_i
+				fsm_width = truncate_digits(width.to_f)
 			end
 
 			if height.include?('.')
-				fsm_height = height.to_f - height.to_i
+				fsm_height = truncate_digits(height.to_f)
 			end
 
 			udf_imsource = ""
@@ -314,19 +326,29 @@ class TemplatesController < ApplicationController
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
 
-				if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+				if udf_entitytype == "Poster" or udf_entitytype == "Image"
 
-					if imagesource != "Old World"
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
-						unitcost = ui * rolledpapertaruicost
-						break
+						if imagesource != "Old World"
 
-					else
+							unitcost = ui * rolledpapertaruicost
+							break
 
-						unitcost = imagesqin * rolledpapertaruicost
-						break
+						else
+
+							unitcost = imagesqin * rolledpapertaruicost
+							break
+
+						end
 
 					end
+
+				end
+
+				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+
+
 
 				end
 
