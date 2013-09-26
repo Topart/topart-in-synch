@@ -175,10 +175,6 @@ class TemplatesController < ApplicationController
 		# print out the number of records
 		puts "Item count: #{com_tomas_so_salesorderhdr.count}"
  
-		# Accessing this view launch the service automatically
-		respond_to do |format|
-			format.html # index.html.erb
-		end
 
 	end
 
