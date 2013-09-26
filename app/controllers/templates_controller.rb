@@ -10,7 +10,7 @@ class TemplatesController < ApplicationController
 
 	def truncate_digits(number, digits)
 
-		a = (( (number * 10**digits).to_i ) / (10**digits)).to_f
+		a = (( (number * 10**digits).to_i ).to_f / (10**digits).to_f).to_f
 		b = a.to_i
 		c = (a - b).to_f
 
