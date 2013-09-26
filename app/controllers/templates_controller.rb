@@ -35,6 +35,11 @@ class TemplatesController < ApplicationController
 
 	end
 
+	def round_to( decimals=0 )
+		factor = 10.0**decimals
+		(self*factor).round / factor
+	end
+
 
 	# GET /generate_template
 	# GET /generate_template.json
