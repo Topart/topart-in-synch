@@ -322,10 +322,13 @@ class TemplatesController < ApplicationController
 				imagesqin = retail_master[retail_line].imagesqin
 				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost
 
-				p "ui"
-				p ui
-				p "image_ui"
-				p image_ui
+
+				if imagesource == udf_imsource and ratiodec == udf_ratiodec
+					p "ui"
+					p ui
+					p "image_ui"
+					p image_ui
+				end
 
 				if ui == image_ui
 					p "UI match"
