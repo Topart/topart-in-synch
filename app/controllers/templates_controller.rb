@@ -14,13 +14,7 @@ class TemplatesController < ApplicationController
 		b = a.to_i
 		c = (a - b).to_f
 
-		p a
-		p b
-		p c
-
 		result = (c * 10**digits).to_i
-
-		p result
 
 		return result
 
