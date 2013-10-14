@@ -193,15 +193,21 @@ class TemplatesController < ApplicationController
 	def pick_retail_sheet(sku_code)
 		
 		retail_csv_content = ""
+		retail_file_name = ""
 
 		open('retail_master.csv', 'wb') do |file|
 
 			if sku_code == "PR"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
+  				retail_file_name = "retail_master_paper.csv";
+  			end
+
+  			if sku_code == "CV"
+  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas.csv').read
+  				retail_file_name = "retail_master_paper.csv";
   			end
 		end
 
-		retail_file_name = "retail_master_paper.csv";
 		retail_csv_file = File.open(retail_file_name, "w")
 		retail_csv_file.puts retail_csv_content
 		retail_csv_file.close
@@ -322,15 +328,15 @@ class TemplatesController < ApplicationController
 			retail_master = pick_retail_sheet(substrate)
 
 			while !retail_master[retail_line].nil? do
-				
-				imagesource = retail_master[retail_line].imagesource
-				ratiodec = retail_master[retail_line].ratiodec.to_f
-				ui = retail_master[retail_line].ui.to_i
-				imagesqin = retail_master[retail_line].imagesqin.to_f
-				rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
+				# If Poster or digital Paper
+				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
 
-				if udf_entitytype == "Poster" or udf_entitytype == "Image"
+					imagesource = retail_master[retail_line].imagesource
+					ratiodec = retail_master[retail_line].ratiodec.to_f
+					ui = retail_master[retail_line].ui.to_i
+					imagesqin = retail_master[retail_line].imagesqin.to_f
+					rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
 					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
@@ -349,6 +355,41 @@ class TemplatesController < ApplicationController
 					end
 
 				end
+
+
+
+				# If digital canvas
+				if (udf_entitytype == "Image" and substrate == "CV")
+
+					imagesource = retail_master[retail_line].imagesource
+					ratiodec = retail_master[retail_line].ratiodec.to_f
+					imagesqin = retail_master[retail_line].imagesqin.to_f
+
+					border_treatment_code = retail_master[retail_line].skucode.to_f
+					ui = retail_master[retail_line].ui.to_i
+					uicost = retail_master[retail_line].uicost.to_f
+					
+					# Now also identify the exact type of border treatment
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and border_treatment_code == border and ui == image_ui
+
+						if imagesource != "Old World"
+
+							unitcost = ui * uicost
+							break
+
+						else
+
+							unitcost = imagesqin * uicost
+							break
+
+						end
+
+					end					
+
+
+				end
+
+
 
 				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 
