@@ -193,29 +193,32 @@ class TemplatesController < ApplicationController
 	def pick_retail_sheet(sku_code, treatment_code)
 		
 		retail_csv_content = ""
-		retail_file_name = "retail_master.csv"
 
-		#open(retail_file_name, 'wb') do |file|
+		open(retail_file_name, 'wb') do |file|
 
 			if sku_code == "PR"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
+  				retail_file_name = "retail_master_paper.csv"
   			end
 
   			if sku_code == "CV"
 
   				if treatment_code == "WH"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_wh_border.csv').read
+	  				retail_file_name = "retail_master_canvas.csv"
   				end
 
   				if treatment_code == "BL"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_bl_border.csv').read
+	  				retail_file_name = "retail_master_canvas.csv"
   				end
 
   				if treatment_code == "MR"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
+	  				retail_file_name = "retail_master_canvas.csv"
   				end
   			end
-		#end
+		end
 
 		retail_csv_file = File.open(retail_file_name, "w")
 		retail_csv_file.puts retail_csv_content
