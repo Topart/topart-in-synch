@@ -193,6 +193,7 @@ class TemplatesController < ApplicationController
 	def pick_retail_sheet(sku_code, treatment_code)
 		
 		retail_csv_content = ""
+		retail_file_name = ""
 
 		open(retail_file_name, 'wb') do |file|
 
