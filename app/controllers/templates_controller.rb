@@ -203,16 +203,24 @@ class TemplatesController < ApplicationController
 
   			if sku_code == "CV"
 
+  				p "CV"
+
   				if treatment_code == "WH"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_wh_border.csv').read
+
+	  				p "WH"
   				end
 
   				if treatment_code == "BL"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_bl_border.csv').read
+
+	  				p "BL"
   				end
 
   				if treatment_code == "MR"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
+
+	  				p "MR"
   				end
   			end
 		end
