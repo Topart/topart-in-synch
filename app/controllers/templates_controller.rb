@@ -195,7 +195,7 @@ class TemplatesController < ApplicationController
 		retail_csv_content = ""
 		retail_file_name = "retail_master.csv"
 
-		open(retail_file_name, 'wb') do |file|
+		#open(retail_file_name, 'wb') do |file|
 
 			if sku_code == "PR"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
@@ -215,7 +215,7 @@ class TemplatesController < ApplicationController
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
   				end
   			end
-		end
+		#end
 
 		retail_csv_file = File.open(retail_file_name, "w")
 		retail_csv_file.puts retail_csv_content
