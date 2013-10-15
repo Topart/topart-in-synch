@@ -371,21 +371,41 @@ class TemplatesController < ApplicationController
 					imagesqin = retail_master[retail_line].imagesqin.to_f
 
 					border_treatment_code = retail_master[retail_line].skucode.to_f
-					ui = retail_master[retail_line].ui.to_i
-					uicost = retail_master[retail_line].uicost.to_f
+					
+					ui = 0
+					uicost = 0.0
+
+					if border_treatment_code == "WH"
+						ui = retail_master[retail_line].wh_ui.to_i
+						uicost = retail_master[retail_line].wh_uicost.to_f
+					end
+
+					if border_treatment_code == "BL"
+						ui = retail_master[retail_line].bl_ui.to_i
+						uicost = retail_master[retail_line].bl_uicost.to_f
+					end
+
+					if border_treatment_code == "MR"
+						ui = retail_master[retail_line].mr_ui.to_i
+						uicost = retail_master[retail_line].mr_uicost.to_f
+					end
 					
 					# Now also identify the exact type of border treatment
-					if imagesource == udf_imsource and ratiodec == udf_ratiodec and border_treatment_code == border and ui == image_ui
+					if border_treatment_code == border
+						
+						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
-						if imagesource != "Old World"
+							if imagesource != "Old World"
 
-							unitcost = ui * uicost
-							break
+								unitcost = ui * uicost
+								break
 
-						else
+							else
 
-							unitcost = imagesqin * uicost
-							break
+								unitcost = imagesqin * uicost
+								break
+
+							end
 
 						end
 
