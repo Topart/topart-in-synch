@@ -368,7 +368,33 @@ class TemplatesController < ApplicationController
 
 
 				# If digital canvas
-				
+				if udf_entitytype == "Image" and substrate == "CV"
+
+					imagesource = retail_master[retail_line].imagesource
+					ratiodec = retail_master[retail_line].ratiodec.to_f
+					imagesqin = retail_master[retail_line].imagesqin.to_f
+					
+					ui = retail_master[retail_line].ui.to_i
+					uicost = retail_master[retail_line].uicost.to_f
+					
+						
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+						if imagesource != "Old World"
+
+							unitcost = ui * uicost
+							break
+
+						else
+
+							unitcost = imagesqin * uicost
+							break
+
+						end
+
+					end
+
+				end
 
 
 
