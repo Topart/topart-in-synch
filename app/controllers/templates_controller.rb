@@ -199,12 +199,12 @@ class TemplatesController < ApplicationController
 
 			if sku_code == "PR"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
-  				retail_file_name = "retail_master_paper.csv";
+  				retail_file_name = "retail_master_paper.csv"
   			end
 
   			if sku_code == "CV"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas.csv').read
-  				retail_file_name = "retail_master_canvas.csv";
+  				retail_file_name = "retail_master_canvas.csv"
   			end
 		end
 
@@ -325,11 +325,6 @@ class TemplatesController < ApplicationController
 			unitcost = 0
 
 			# Select the correct retail sheet, depending on the substrate
-
-			p "begin_"
-			p substrate
-			p "_end"
-
 			retail_master = pick_retail_sheet(substrate)
 
 			while !retail_master[retail_line].nil? do
