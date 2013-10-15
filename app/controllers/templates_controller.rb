@@ -206,17 +206,17 @@ class TemplatesController < ApplicationController
 
   				if treatment_code == "WH"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_wh_border.csv').read
-	  				retail_file_name = "retail_master_canvas_wh.csv"
+	  				retail_file_name = "retail_master_canvas_wh_border.csv"
   				end
 
   				if treatment_code == "BL"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_bl_border.csv').read
-	  				retail_file_name = "retail_master_canvas_bl.csv"
+	  				retail_file_name = "retail_master_canvas_bl_border.csv"
   				end
 
   				if treatment_code == "MR"
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
-	  				retail_file_name = "retail_master_canvas_mr.csv"
+	  				retail_file_name = "retail_master_canvas_mr_border.csv"
   				end
   			end
 		end
