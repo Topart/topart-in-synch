@@ -325,6 +325,11 @@ class TemplatesController < ApplicationController
 			unitcost = 0
 
 			# Select the correct retail sheet, depending on the substrate
+
+			p "begin_"
+			p substrate
+			p "_end"
+
 			retail_master = pick_retail_sheet(substrate)
 
 			while !retail_master[retail_line].nil? do
