@@ -204,7 +204,7 @@ class TemplatesController < ApplicationController
 
   			if sku_code == "CV"
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas.csv').read
-  				retail_file_name = "retail_master_paper.csv";
+  				retail_file_name = "retail_master_canvas.csv";
   			end
 		end
 
