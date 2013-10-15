@@ -337,10 +337,10 @@ class TemplatesController < ApplicationController
 			retail_line = 0
 			unitcost = 0
 
-			border_treatment_code = retail_master[retail_line].skucode.to_f
-
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(substrate, border_treatment_code)
+			
+			border_treatment_code = retail_master[retail_line].skucode.to_f
 
 			while !retail_master[retail_line].nil? do
 
