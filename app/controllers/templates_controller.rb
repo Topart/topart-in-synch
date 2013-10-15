@@ -190,7 +190,7 @@ class TemplatesController < ApplicationController
 
 	end
 
-	def pick_retail_sheet(sku_code)
+	def pick_retail_sheet(sku_code, treatment_code)
 		
 		retail_csv_content = ""
 		retail_file_name = ""
@@ -203,8 +203,21 @@ class TemplatesController < ApplicationController
   			end
 
   			if sku_code == "CV"
-  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas.csv').read
-  				retail_file_name = "retail_master_canvas.csv"
+
+  				if treatment_code == "WH"
+	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_wh_border.csv').read
+	  				retail_file_name = "retail_master_canvas_wh.csv"
+  				end
+
+  				if treatment_code == "BL"
+	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_bl_border.csv').read
+	  				retail_file_name = "retail_master_canvas_bl.csv"
+  				end
+
+  				if treatment_code == "MR"
+	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
+	  				retail_file_name = "retail_master_canvas_mr.csv"
+  				end
   			end
 		end
 
@@ -324,8 +337,10 @@ class TemplatesController < ApplicationController
 			retail_line = 0
 			unitcost = 0
 
+			border_treatment_code = retail_master[retail_line].skucode.to_f
+
 			# Select the correct retail sheet, depending on the substrate
-			retail_master = pick_retail_sheet(substrate)
+			retail_master = pick_retail_sheet(substrate, border_treatment_code)
 
 			while !retail_master[retail_line].nil? do
 
@@ -364,48 +379,26 @@ class TemplatesController < ApplicationController
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
 					imagesqin = retail_master[retail_line].imagesqin.to_f
-
-					border_treatment_code = retail_master[retail_line].skucode.to_f
 					
-					ui = 0
-					uicost = 0.0
-
-					if border_treatment_code == "WH"
-						ui = retail_master[retail_line].wh_ui.to_i
-						uicost = retail_master[retail_line].wh_uicost.to_f
-					end
-
-					if border_treatment_code == "BL"
-						ui = retail_master[retail_line].bl_ui.to_i
-						uicost = retail_master[retail_line].bl_uicost.to_f
-					end
-
-					if border_treatment_code == "MR"
-						ui = retail_master[retail_line].mr_ui.to_i
-						uicost = retail_master[retail_line].mr_uicost.to_f
-					end
+					ui = retail_master[retail_line].ui.to_i
+					uicost = retail_master[retail_line].uicost.to_f
 					
-					# Now also identify the exact type of border treatment
-					if border_treatment_code == border
 						
-						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
-							if imagesource != "Old World"
+						if imagesource != "Old World"
 
-								unitcost = ui * uicost
-								break
+							unitcost = ui * uicost
+							break
 
-							else
+						else
 
-								unitcost = imagesqin * uicost
-								break
-
-							end
+							unitcost = imagesqin * uicost
+							break
 
 						end
 
-					end					
-
+					end
 
 				end
 
