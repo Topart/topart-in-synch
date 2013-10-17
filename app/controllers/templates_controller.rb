@@ -215,6 +215,12 @@ class TemplatesController < ApplicationController
 	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
   				end
   			end
+
+  			if sku_code == "AR" or sku_code == "ST"
+
+  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
+
+  			end
 		end
 
 		retail_csv_file = File.open(retail_file_name, "w")
@@ -332,6 +338,19 @@ class TemplatesController < ApplicationController
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
 			unitcost = 0
+			retail_substrate = ""
+
+			if substrate != ""
+				retail_substrate = substrate
+			end
+
+			if substrate == "" and covering != "" 
+				retail_substrate = covering
+			end
+
+			if substrate == "" and edge != ""
+				retail_substrate = edge
+			end
 
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(substrate, border)
@@ -363,12 +382,9 @@ class TemplatesController < ApplicationController
 
 					end
 
-				end
-
-
 
 				# If digital canvas
-				if udf_entitytype == "Image" and substrate == "CV"
+				elsif udf_entitytype == "Image" and substrate == "CV"
 
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
@@ -394,13 +410,22 @@ class TemplatesController < ApplicationController
 
 					end
 
-				end
+				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+				else
+					
+					frame_mat_stretch_sku = retail_master[retail_line].sku
+					uicost = retail_master[retail_line].uicost.to_f
+					mountingcost = retail_master[retail_line].mountingcost.to_f
+					frame_mat_stretch_sku = width + height
 
+					p frame_mat_stretch_sku
 
+					if frame_mat_stretch_sku == itemcode
 
-				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+						unitcost = (uicost * frame_mat_stretch_sku) + mountingcost
+						break
 
-
+					end
 
 				end
 
