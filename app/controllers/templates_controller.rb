@@ -218,6 +218,8 @@ class TemplatesController < ApplicationController
 
   			if sku_code == "AR" or sku_code == "ST"
 
+  				p "Frame CSV"
+
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
