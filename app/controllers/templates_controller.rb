@@ -333,8 +333,6 @@ class TemplatesController < ApplicationController
 	  			udf_entitytype = row[:udf_entitytype]
 			end
 
-			p udf_entitytype
-
 
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
@@ -387,6 +385,8 @@ class TemplatesController < ApplicationController
 				# If digital canvas
 				if udf_entitytype == "Image" and substrate == "CV"
 
+					p "Image test"
+
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
 					imagesqin = retail_master[retail_line].imagesqin.to_f
@@ -394,6 +394,7 @@ class TemplatesController < ApplicationController
 					ui = retail_master[retail_line].ui.to_i
 					uicost = retail_master[retail_line].uicost.to_f
 					
+					p uicost
 						
 					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
