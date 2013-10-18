@@ -348,16 +348,15 @@ class TemplatesController < ApplicationController
 				p substrate
 			end
 
-			if substrate == "" and covering != "" 
-				retail_substrate = covering
+			p covering
+			p edge
 
-				p covering
+			if covering != "" 
+				retail_substrate = covering
 			end
 
-			if substrate == "" and edge != ""
+			if edge != ""
 				retail_substrate = edge
-
-				p edge
 			end
 
 			# Select the correct retail sheet, depending on the substrate
