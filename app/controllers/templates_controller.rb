@@ -424,7 +424,7 @@ class TemplatesController < ApplicationController
 				
 				
 				else 
-					udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+					#udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 					
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
