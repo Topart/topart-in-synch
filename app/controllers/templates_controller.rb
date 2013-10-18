@@ -380,10 +380,10 @@ class TemplatesController < ApplicationController
 						end
 
 					end
-
+				end
 
 				# If digital canvas
-				elsif udf_entitytype == "Image" and substrate == "CV"
+				if udf_entitytype == "Image" and substrate == "CV"
 
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
@@ -409,8 +409,9 @@ class TemplatesController < ApplicationController
 
 					end
 
-				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
-				else
+				end
+				
+				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 					
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
