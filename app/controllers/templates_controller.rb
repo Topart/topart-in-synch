@@ -218,8 +218,6 @@ class TemplatesController < ApplicationController
 
   			if sku_code == "AR" or sku_code == "ST"
 
-  				p "Frame CSV"
-
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
@@ -284,7 +282,6 @@ class TemplatesController < ApplicationController
 			weborderid = orders_export[orders_line].weborderid
 			salesorderno = orders_export[orders_line].salesorderno
 			sequenceno = orders_export[orders_line].sequenceno
-			p sequenceno
 			
 			itemcode = orders_export[orders_line].itemcode
 			itemcodedesc = orders_export[orders_line].itemcodedesc
@@ -344,12 +341,7 @@ class TemplatesController < ApplicationController
 
 			if substrate != ""
 				retail_substrate = substrate
-
-				p substrate
 			end
-
-			p covering
-			p edge
 
 			if covering != "" 
 				retail_substrate = covering
@@ -423,13 +415,13 @@ class TemplatesController < ApplicationController
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
 					mountingcost = retail_master[retail_line].mountingcost.to_f
-					frame_mat_stretch_sku = width + height
+					frame_mat_stretch_ui = width + height
 
 					p frame_mat_stretch_sku
 
 					if frame_mat_stretch_sku == itemcode
 
-						unitcost = (uicost * frame_mat_stretch_sku) + mountingcost
+						unitcost = (uicost * frame_mat_stretch_ui) + mountingcost
 						break
 
 					end
