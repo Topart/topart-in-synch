@@ -221,6 +221,8 @@ class TemplatesController < ApplicationController
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
+
+  			p sku_code
 		end
 
 		retail_csv_file = File.open(retail_file_name, "w")
@@ -354,13 +356,13 @@ class TemplatesController < ApplicationController
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(retail_substrate, border)
 
-			p "1"
-			p udf_entitytype
+			#p "1"
+			#p udf_entitytype
 
 			while !retail_master[retail_line].nil? do
 
-				p "2"
-				p udf_entitytype
+				#p "2"
+				#p udf_entitytype
 
 				# If Poster or digital Paper
 				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
