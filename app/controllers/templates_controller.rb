@@ -351,7 +351,7 @@ class TemplatesController < ApplicationController
 				retail_substrate = edge
 			end
 
-			p retail_substrate
+			#p retail_substrate
 
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(retail_substrate, border)
@@ -388,11 +388,11 @@ class TemplatesController < ApplicationController
 						end
 
 					end
-				end
+				
 
 
 				# If digital canvas
-				if udf_entitytype == "Image" and substrate == "CV"
+				elsif udf_entitytype == "Image" and substrate == "CV"
 
 					p "Image test"
 
@@ -421,9 +421,10 @@ class TemplatesController < ApplicationController
 
 					end
 
-				end
 				
-				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+				
+				else 
+					udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 					
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
