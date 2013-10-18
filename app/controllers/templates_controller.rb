@@ -418,7 +418,7 @@ class TemplatesController < ApplicationController
 
 					if frame_mat_stretch_sku == itemcode
 
-						unitcost = (uicost * total_ui) + mountingcost
+						unitcost = (uicost * total_ui.to_f) + mountingcost
 						break
 
 					end
