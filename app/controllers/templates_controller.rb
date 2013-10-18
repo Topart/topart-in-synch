@@ -355,7 +355,7 @@ class TemplatesController < ApplicationController
 			end
 
 			# Select the correct retail sheet, depending on the substrate
-			retail_master = pick_retail_sheet(substrate, border)
+			retail_master = pick_retail_sheet(retail_substrate, border)
 
 			while !retail_master[retail_line].nil? do
 
