@@ -303,7 +303,7 @@ class TemplatesController < ApplicationController
 			covering = orders_export[orders_line].covering
 			edge = orders_export[orders_line].edge
 
-
+			total_ui = width.to_i + height.to_i
 
 			# Info needed to retrieve the correct UI cost: image source, sku
 
@@ -415,13 +415,10 @@ class TemplatesController < ApplicationController
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
 					mountingcost = retail_master[retail_line].mountingcost.to_f
-					frame_mat_stretch_ui = width + height
-
-					p frame_mat_stretch_sku
 
 					if frame_mat_stretch_sku == itemcode
 
-						unitcost = (uicost * frame_mat_stretch_ui) + mountingcost
+						unitcost = (uicost * total_ui) + mountingcost
 						break
 
 					end
