@@ -339,15 +339,15 @@ class TemplatesController < ApplicationController
 			unitcost = 0
 			retail_substrate = ""
 
-			if substrate != ""
+			if !substrate.blank?
 				retail_substrate = substrate
 			end
 
-			if covering != "" 
+			if !covering.blank?
 				retail_substrate = covering
 			end
 
-			if edge != ""
+			if !edge.blank?
 				retail_substrate = edge
 			end
 
