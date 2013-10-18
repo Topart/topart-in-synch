@@ -423,8 +423,11 @@ class TemplatesController < ApplicationController
 
 				end
 				
-				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
-					
+				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+				if retail_substrate == "AR" or retail_substrate == "ST"
+
+					p "FRAME"
+
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
 					mountingcost = retail_master[retail_line].mountingcost.to_f
