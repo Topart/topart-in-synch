@@ -354,7 +354,13 @@ class TemplatesController < ApplicationController
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(retail_substrate, border)
 
+			p "1"
+			p udf_entitytype
+
 			while !retail_master[retail_line].nil? do
+
+				p "2"
+				p udf_entitytype
 
 				# If Poster or digital Paper
 				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
@@ -382,8 +388,6 @@ class TemplatesController < ApplicationController
 					end
 				end
 
-				p udf_entitytype
-				p substrate
 
 				# If digital canvas
 				if udf_entitytype == "Image" and substrate == "CV"
