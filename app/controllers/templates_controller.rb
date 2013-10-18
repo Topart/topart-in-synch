@@ -382,6 +382,9 @@ class TemplatesController < ApplicationController
 					end
 				end
 
+				p udf_entitytype
+				p substrate
+
 				# If digital canvas
 				if udf_entitytype == "Image" and substrate == "CV"
 
