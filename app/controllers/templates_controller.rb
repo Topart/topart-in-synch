@@ -221,8 +221,6 @@ class TemplatesController < ApplicationController
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
-
-  			p sku_code
 		end
 
 		retail_csv_file = File.open(retail_file_name, "w")
@@ -352,6 +350,8 @@ class TemplatesController < ApplicationController
 			if edge != ""
 				retail_substrate = edge
 			end
+
+			p retail_substrate
 
 			# Select the correct retail sheet, depending on the substrate
 			retail_master = pick_retail_sheet(retail_substrate, border)
