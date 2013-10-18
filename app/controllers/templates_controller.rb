@@ -221,8 +221,6 @@ class TemplatesController < ApplicationController
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
-
-  			p sku_code
 		end
 
 		retail_csv_file = File.open(retail_file_name, "w")
@@ -335,6 +333,8 @@ class TemplatesController < ApplicationController
 	  			udf_entitytype = row[:udf_entitytype]
 			end
 
+			p udf_entitytype
+
 
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
@@ -358,12 +358,8 @@ class TemplatesController < ApplicationController
 
 			while !retail_master[retail_line].nil? do
 
-				p udf_entitytype
-
 				# If Poster or digital Paper
 				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
-
-					p "PR"
 
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
@@ -372,8 +368,6 @@ class TemplatesController < ApplicationController
 					rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
 					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-						p rolledpapertaruicost
 
 						if imagesource != "Old World"
 
@@ -392,8 +386,6 @@ class TemplatesController < ApplicationController
 
 				# If digital canvas
 				if udf_entitytype == "Image" and substrate == "CV"
-
-					p "Image"
 
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
@@ -423,8 +415,6 @@ class TemplatesController < ApplicationController
 				
 				if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 					
-					p "Frame"
-
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
 					mountingcost = retail_master[retail_line].mountingcost.to_f
