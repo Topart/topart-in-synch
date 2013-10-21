@@ -78,6 +78,9 @@ class TemplatesController < ApplicationController
 		#db_connection_test = Sequel.connect('postgres://zlqmruskgjfmsn:ZL1exeZYZEVN9O9E0qTQ8uKBmX@ec2-23-21-176-133.compute-1.amazonaws.com:5432/dajd8d3f0o9thb')
 		db_connection_production = Sequel.connect('postgres://wmstzwyvztebck:Ip_u0EC3coXXQxHdwzfDQiWxcI@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d1uoa7pu2d1ssk')
 
+		# create a dataset from the from MAS sales order history header table. Used to avoid data re-population
+		com_frommas_so_salesorderhisthdr = db_connection_production[:com_frommas_so_salesorderhisthdr]
+
 		# create a dataset from the items table
 		com_tomas_so_salesorderhdr = db_connection_production[:com_tomas_so_salesorderhdr]
 		#frommasar_customer = db_connection_production[:frommasar_customer]
@@ -154,29 +157,17 @@ class TemplatesController < ApplicationController
 			# Got to add the retail (01) and trade (02) divisions
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
-			record = com_tomas_so_salesorderhdr.where(:salesorderno => salesorderno)
+			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
-			if !record.empty?
-				# Update existing records
-				record.update(:orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
-				:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
-				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
-				:billtocity => billtocity, :billtostate => billtostate,
-				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1, 
-				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
-				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
-			else
-
-			# Populate the table
-			com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
-				:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
-				:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
-				:billtocity => billtocity, :billtostate => billtostate,
-				:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
-				:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
-				:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-				:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
+			if record.empty?
+				com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
+					:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
+					:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
+					:billtocity => billtocity, :billtostate => billtostate,
+					:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
+					:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
+					:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
+					:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
 
 			end
 
@@ -426,7 +417,7 @@ class TemplatesController < ApplicationController
 				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 				if retail_substrate == "AR" or retail_substrate == "ST"
 
-					p "FRAME"
+					#p "FRAME"
 
 					frame_mat_stretch_sku = retail_master[retail_line].sku
 					uicost = retail_master[retail_line].uicost.to_f
