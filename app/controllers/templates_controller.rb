@@ -432,6 +432,13 @@ class TemplatesController < ApplicationController
 
 				end
 
+				if itemcode == "stretch"
+
+					stretch_ui_cost = 0.43
+					unitcost = stretch_ui_cost * total_ui.to_f
+
+				end
+
 				retail_line = retail_line + 1
 
 			end	
