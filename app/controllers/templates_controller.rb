@@ -394,9 +394,12 @@ class TemplatesController < ApplicationController
 					ui = retail_master[retail_line].ui.to_i
 					uicost = retail_master[retail_line].uicost.to_f
 					
-					p uicost
+					#p uicost
 						
 					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+						p uicost
+						p ui
 
 						if imagesource != "Old World"
 
