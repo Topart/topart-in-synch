@@ -406,7 +406,6 @@ class TemplatesController < ApplicationController
 						else
 
 							unitcost = imagesqin * uicost
-							p unitcost
 							break
 
 						end
@@ -414,6 +413,8 @@ class TemplatesController < ApplicationController
 					end
 
 				end
+
+				p unitcost
 				
 				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 				if retail_substrate == "AR" or retail_substrate == "ST"
