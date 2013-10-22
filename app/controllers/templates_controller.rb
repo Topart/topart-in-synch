@@ -360,7 +360,7 @@ class TemplatesController < ApplicationController
 
 					imagesource = retail_master[retail_line].imagesource
 					ratiodec = retail_master[retail_line].ratiodec.to_f
-					ui = retail_master[retail_line].ui.to_i
+					ui = retail_master[retail_line].ui.to_f
 					imagesqin = retail_master[retail_line].imagesqin.to_f
 					rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
@@ -391,15 +391,12 @@ class TemplatesController < ApplicationController
 					ratiodec = retail_master[retail_line].ratiodec.to_f
 					imagesqin = retail_master[retail_line].imagesqin.to_f
 					
-					ui = retail_master[retail_line].ui.to_i
+					ui = retail_master[retail_line].ui.to_f
 					uicost = retail_master[retail_line].uicost.to_f
 					
 					#p uicost
 						
 					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-						p uicost
-						p ui
 
 						if imagesource != "Old World"
 
@@ -409,6 +406,7 @@ class TemplatesController < ApplicationController
 						else
 
 							unitcost = imagesqin * uicost
+							p unitcost
 							break
 
 						end
