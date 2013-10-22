@@ -436,6 +436,10 @@ class TemplatesController < ApplicationController
 
 					stretch_ui_cost = 0.43
 					unitcost = stretch_ui_cost * total_ui.to_f
+
+					p stretch_ui_cost
+					p ""
+					p total_ui.to_f
 					break
 
 				end
