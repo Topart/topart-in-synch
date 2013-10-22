@@ -264,8 +264,7 @@ class TemplatesController < ApplicationController
 		# create a dataset from the items table
 		im1_inventorymasterfile = db_connection_production[:im1_inventorymasterfile]
 
-		# Stretch UI cost
-		stretch_ui_cost = 0.43
+
 
 		orders_line = 0
 
@@ -343,112 +342,99 @@ class TemplatesController < ApplicationController
 				retail_substrate = edge
 			end
 
-			if itemcode == "stretch"
-	
-				unitcost = stretch_ui_cost * total_ui.to_f
+			#p retail_substrate
 
-				p stretch_ui_cost
-				p ""
-				p total_ui.to_f
-				p ""
-				p unitcost
+			# Select the correct retail sheet, depending on the substrate
+			retail_master = pick_retail_sheet(retail_substrate, border)
 
+			#p "1"
+			#p udf_entitytype
 
-			else
-				#p retail_substrate
+			while !retail_master[retail_line].nil? do
 
-				# Select the correct retail sheet, depending on the substrate
-				retail_master = pick_retail_sheet(retail_substrate, border)
-
-				#p "1"
+				#p "2"
 				#p udf_entitytype
 
-				while !retail_master[retail_line].nil? do
+				# If Poster or digital Paper
+				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
 
-					#p "2"
-					#p udf_entitytype
+					imagesource = retail_master[retail_line].imagesource
+					ratiodec = retail_master[retail_line].ratiodec.to_f
+					ui = retail_master[retail_line].ui.to_i
+					imagesqin = retail_master[retail_line].imagesqin.to_f
+					rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
 
-					# If Poster or digital Paper
-					if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
-						imagesource = retail_master[retail_line].imagesource
-						ratiodec = retail_master[retail_line].ratiodec.to_f
-						ui = retail_master[retail_line].ui.to_i
-						imagesqin = retail_master[retail_line].imagesqin.to_f
-						rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
+						if imagesource != "Old World"
 
-						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+							unitcost = ui * rolledpapertaruicost
+							break
 
-							if imagesource != "Old World"
+						else
 
-								unitcost = ui * rolledpapertaruicost
-								break
-
-							else
-
-								unitcost = imagesqin * rolledpapertaruicost
-								break
-
-							end
-
-						end
-					end
-
-
-					# If digital canvas
-					if udf_entitytype == "Image" and substrate == "CV"
-
-						#p "Image test"
-
-						imagesource = retail_master[retail_line].imagesource
-						ratiodec = retail_master[retail_line].ratiodec.to_f
-						imagesqin = retail_master[retail_line].imagesqin.to_f
-						
-						ui = retail_master[retail_line].ui.to_i
-						uicost = retail_master[retail_line].uicost.to_f
-						
-						#p uicost
-							
-						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-							if imagesource != "Old World"
-
-								unitcost = ui * uicost
-								break
-
-							else
-
-								unitcost = imagesqin * uicost
-								break
-
-							end
+							unitcost = imagesqin * rolledpapertaruicost
+							break
 
 						end
 
 					end
+				end
+
+
+				# If digital canvas
+				if udf_entitytype == "Image" and substrate == "CV"
+
+					#p "Image test"
+
+					imagesource = retail_master[retail_line].imagesource
+					ratiodec = retail_master[retail_line].ratiodec.to_f
+					imagesqin = retail_master[retail_line].imagesqin.to_f
 					
-					#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
-					if retail_substrate == "AR" or retail_substrate == "ST"
+					ui = retail_master[retail_line].ui.to_i
+					uicost = retail_master[retail_line].uicost.to_f
+					
+					#p uicost
+						
+					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
 
-						#p "FRAME"
+						if imagesource != "Old World"
 
-						frame_mat_stretch_sku = retail_master[retail_line].sku
-						uicost = retail_master[retail_line].uicost.to_f
-						mountingcost = retail_master[retail_line].mountingcost.to_f
+							unitcost = ui * uicost
+							break
 
-						if frame_mat_stretch_sku == itemcode
+						else
 
-							unitcost = (uicost * total_ui.to_f) + mountingcost
+							unitcost = imagesqin * uicost
 							break
 
 						end
 
 					end
 
-					retail_line = retail_line + 1
+				end
+				
+				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+				if retail_substrate == "AR" or retail_substrate == "ST"
 
-				end	
-			end
+					#p "FRAME"
+
+					frame_mat_stretch_sku = retail_master[retail_line].sku
+					uicost = retail_master[retail_line].uicost.to_f
+					mountingcost = retail_master[retail_line].mountingcost.to_f
+
+					if frame_mat_stretch_sku == itemcode
+
+						unitcost = (uicost * total_ui.to_f) + mountingcost
+						break
+
+					end
+
+				end
+
+				retail_line = retail_line + 1
+
+			end	
 
 
 
