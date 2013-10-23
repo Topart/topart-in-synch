@@ -88,86 +88,88 @@ class TemplatesController < ApplicationController
 		while !orders_export[orders_line].nil? do
 			
 			weborderid = orders_export[orders_line].weborderid
-			customerid = orders_export[orders_line].customerid
-			customerpono = orders_export[orders_line].customerpono
-			salesorderno = orders_export[orders_line].salesorderno
-			orderdate = orders_export[orders_line].orderdate
-			emailaddress = orders_export[orders_line].emailaddress
-
-			ardivisionno = orders_export[orders_line].ardivisionno
-			shipvia = orders_export[orders_line].shipvia
-			paymenttype = orders_export[orders_line].paymenttype
-			warehousecode = orders_export[orders_line].warehousecode
-			taxschedule = orders_export[orders_line].taxschedule
-
-			billtoname = orders_export[orders_line].billtoname
-
-			billtoaddress1 = orders_export[orders_line].billtoaddress1
-			billtoaddress2 = orders_export[orders_line].billtoaddress2
-			billtoaddress3 = orders_export[orders_line].billtoaddress3
-			billtocity = orders_export[orders_line].billtocity
-
-			billtostate = orders_export[orders_line].billtostate
-			billtozipcode = orders_export[orders_line].billtozipcode
-			billtocountrycode = orders_export[orders_line].billtocountrycode
-			shiptoname = orders_export[orders_line].shiptoname
-
-			shiptoaddress1 = orders_export[orders_line].shiptoaddress1
-			shiptoaddress2 = orders_export[orders_line].shiptoaddress2
-			shiptoaddress3 = orders_export[orders_line].shiptoaddress3
-
-			shiptocity = orders_export[orders_line].shiptocity
-			shiptostate = orders_export[orders_line].shiptostate
-			shiptozipcode = orders_export[orders_line].shiptozipcode
-			shiptocountrycode = orders_export[orders_line].shiptocountrycode
 			
-			customerno = ""
-
-			# If the customer id already exists in the frommasar_customer table where the email address is the same, use that as CustomerNO
-			db_connection_production.fetch("SELECT customerno FROM frommasar_customer WHERE emailaddress = ?", emailaddress) do |row|
-  				customerno = row[:customerno]
-			end
-
-			# otherwise, we fill the Magento customer id with leading 0's
-			if customerno.empty?
-				customerno = customerid
-			end
-
-			# Map the shipping info
-			if shipvia == "Delivery option - Fedex Groud"
-				shipvia = "FE GROUND"
-			end
-
-			if shipvia == "Delivery option - Fedex 2-day"
-				shipvia = "FE 2 DAY"
-			end
-
-			if shipvia == "Delivery option - Fedex Overnight"
-				shipvia = "FE STD OVRNIGHT"
-			end
-
-			if shipvia == "Free Shipping - Free"
-				shipvia = "FREE"
-			end
-
-			# Map the ARDivision info
-			if ardivisionno == "NOT LOGGED IN" or ardivisionno == "General"
-				ardivisionno = "00"
-			end
-			# Got to add the retail (01) and trade (02) divisions
-
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
 			if record.empty?
+			
+				customerid = orders_export[orders_line].customerid
+				customerpono = orders_export[orders_line].customerpono
+				salesorderno = orders_export[orders_line].salesorderno
+				orderdate = orders_export[orders_line].orderdate
+				emailaddress = orders_export[orders_line].emailaddress
+
+				ardivisionno = orders_export[orders_line].ardivisionno
+				shipvia = orders_export[orders_line].shipvia
+				paymenttype = orders_export[orders_line].paymenttype
+				warehousecode = orders_export[orders_line].warehousecode
+				taxschedule = orders_export[orders_line].taxschedule
+
+				billtoname = orders_export[orders_line].billtoname
+
+				billtoaddress1 = orders_export[orders_line].billtoaddress1
+				billtoaddress2 = orders_export[orders_line].billtoaddress2
+				billtoaddress3 = orders_export[orders_line].billtoaddress3
+				billtocity = orders_export[orders_line].billtocity
+
+				billtostate = orders_export[orders_line].billtostate
+				billtozipcode = orders_export[orders_line].billtozipcode
+				billtocountrycode = orders_export[orders_line].billtocountrycode
+				shiptoname = orders_export[orders_line].shiptoname
+
+				shiptoaddress1 = orders_export[orders_line].shiptoaddress1
+				shiptoaddress2 = orders_export[orders_line].shiptoaddress2
+				shiptoaddress3 = orders_export[orders_line].shiptoaddress3
+
+				shiptocity = orders_export[orders_line].shiptocity
+				shiptostate = orders_export[orders_line].shiptostate
+				shiptozipcode = orders_export[orders_line].shiptozipcode
+				shiptocountrycode = orders_export[orders_line].shiptocountrycode
+				
+				customerno = ""
+
+				# If the customer id already exists in the frommasar_customer table where the email address is the same, use that as CustomerNO
+				db_connection_production.fetch("SELECT customerno FROM frommasar_customer WHERE emailaddress = ?", emailaddress) do |row|
+	  				customerno = row[:customerno]
+				end
+
+				# otherwise, we fill the Magento customer id with leading 0's
+				if customerno.empty?
+					customerno = customerid
+				end
+
+				# Map the shipping info
+				if shipvia == "Delivery option - Fedex Groud"
+					shipvia = "FE GROUND"
+				end
+
+				if shipvia == "Delivery option - Fedex 2-day"
+					shipvia = "FE 2 DAY"
+				end
+
+				if shipvia == "Delivery option - Fedex Overnight"
+					shipvia = "FE STD OVRNIGHT"
+				end
+
+				if shipvia == "Free Shipping - Free"
+					shipvia = "FREE"
+				end
+
+				# Map the ARDivision info
+				if ardivisionno == "NOT LOGGED IN" or ardivisionno == "General"
+					ardivisionno = "00"
+				end
+				# Got to add the retail (01) and trade (02) divisions
+
 				com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
-					:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
-					:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
-					:billtocity => billtocity, :billtostate => billtostate,
-					:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
-					:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
-					:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
-					:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
+						:shipvia => shipvia, :customerno => customerno, :customerpono => customerpono,
+						:paymenttype => paymenttype, :billtoname => billtoname, :billtoaddress1 => billtoaddress1, :billtoaddress2 => billtoaddress2, :billtoaddress3 => billtoaddress3,
+						:billtocity => billtocity, :billtostate => billtostate,
+						:billtozipcode => billtozipcode, :billtocountrycode => billtocountrycode, :shiptoname => shiptoname, :shiptoaddress1 => shiptoaddress1,
+						:shiptoaddress2 => shiptoaddress2, :shiptoaddress3 => shiptoaddress3,
+						:shiptocity => shiptocity, :shiptostate => shiptostate, :shiptozipcode => shiptozipcode, :shiptocountrycode => shiptocountrycode,
+						:warehousecode => warehousecode, :taxschedule => taxschedule, :weborderid => weborderid)
 
 			end
 
