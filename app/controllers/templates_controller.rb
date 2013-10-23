@@ -327,7 +327,7 @@ class TemplatesController < ApplicationController
 
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
-			unitcost = 0
+			$unitcost = 0
 			retail_substrate = ""
 
 			if !substrate.blank?
@@ -368,12 +368,12 @@ class TemplatesController < ApplicationController
 
 						if imagesource != "Old World"
 
-							unitcost = ui * rolledpapertaruicost
+							$unitcost = ui * rolledpapertaruicost
 							break
 
 						else
 
-							unitcost = imagesqin * rolledpapertaruicost
+							$unitcost = imagesqin * rolledpapertaruicost
 							break
 
 						end
@@ -400,12 +400,12 @@ class TemplatesController < ApplicationController
 
 						if imagesource != "Old World"
 
-							unitcost = ui * uicost
+							$unitcost = ui * uicost
 							break
 
 						else
 
-							unitcost = imagesqin * uicost
+							$unitcost = imagesqin * uicost
 							break
 
 						end
@@ -413,8 +413,6 @@ class TemplatesController < ApplicationController
 					end
 
 				end
-
-				p unitcost
 				
 				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 				if retail_substrate == "AR" or retail_substrate == "ST"
@@ -427,7 +425,7 @@ class TemplatesController < ApplicationController
 
 					if frame_mat_stretch_sku == itemcode
 
-						unitcost = (uicost * total_ui.to_f) + mountingcost
+						$unitcost = (uicost * total_ui.to_f) + mountingcost
 						break
 
 					end
@@ -449,7 +447,7 @@ class TemplatesController < ApplicationController
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge, :unitcost => unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
+					:covering => covering, :edge => edge, :unitcost => $unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
 			end
 
 			orders_line += 1
