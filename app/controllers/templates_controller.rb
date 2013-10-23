@@ -437,7 +437,7 @@ class TemplatesController < ApplicationController
 			end	
 
 
-			$unitcost = number_with_precision($unitcost, precision: 5)
+			$unitcost = $unitcost.round(5)
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
