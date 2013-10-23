@@ -410,6 +410,8 @@ class TemplatesController < ApplicationController
 
 						end
 
+						p $unitcost
+
 					end
 
 				end
