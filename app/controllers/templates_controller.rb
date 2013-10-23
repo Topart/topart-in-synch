@@ -207,7 +207,7 @@ class TemplatesController < ApplicationController
   				end
   			end
 
-  			if sku_code == "AR" or sku_code == "ST"
+  			if sku_code == "AR" or sku_code == "ST" or sku_code == "GL"
 
   				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
 
@@ -347,6 +347,10 @@ class TemplatesController < ApplicationController
 					retail_substrate = edge
 				end
 
+				if !wrap.blank?
+					retail_substrate = wrap
+				end
+
 				#p retail_substrate
 
 				# Select the correct retail sheet, depending on the substrate
@@ -419,8 +423,8 @@ class TemplatesController < ApplicationController
 
 					end
 
-					#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
-					if retail_substrate == "AR" or retail_substrate == "ST"
+					#if udf_entitytype == "Frame" or udf_entitytype == "Mat"
+					if retail_substrate == "AR" or retail_substrate == "ST" or retail_substrate == "GL"
 
 						#p "FRAME"
 
