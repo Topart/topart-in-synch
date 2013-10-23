@@ -407,7 +407,7 @@ class TemplatesController < ApplicationController
 
 							$unitcost = imagesqin * uicost
 
-							p "1"
+							p "test 1"
 							p $unitcost
 							break
 
@@ -417,9 +417,11 @@ class TemplatesController < ApplicationController
 
 				end
 
-				p "2"
-				p $unitcost
-				
+				if $unitcost != 0
+					p "test 2"
+					p $unitcost
+				end
+
 				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
 				if retail_substrate == "AR" or retail_substrate == "ST"
 
