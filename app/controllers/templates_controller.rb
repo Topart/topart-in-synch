@@ -407,7 +407,7 @@ class TemplatesController < ApplicationController
 
 							$unitcost = imagesqin * uicost
 
-							p $unitcost
+							#p $unitcost
 							break
 
 						end
@@ -441,7 +441,9 @@ class TemplatesController < ApplicationController
 
 			$unitcost = $unitcost.round(3)
 
-			#p $unitcost
+			if $unitcost != 0
+				p $unitcost
+			end
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
