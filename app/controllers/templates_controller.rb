@@ -267,7 +267,7 @@ class TemplatesController < ApplicationController
 
 
 		orders_line = 0
-		$unitcost = 0
+		unitcost = 0
 
 		while !orders_export[orders_line].nil? do
 			
@@ -368,12 +368,12 @@ class TemplatesController < ApplicationController
 
 						if imagesource != "Old World"
 
-							$unitcost = ui * rolledpapertaruicost
+							unitcost = ui * rolledpapertaruicost
 							break
 
 						else
 
-							$unitcost = imagesqin * rolledpapertaruicost
+							unitcost = imagesqin * rolledpapertaruicost
 							break
 
 						end
@@ -400,14 +400,12 @@ class TemplatesController < ApplicationController
 
 						if imagesource != "Old World"
 
-							$unitcost = ui * uicost
+							unitcost = ui * uicost
 							break
 
 						else
 
-							$unitcost = imagesqin * uicost
-
-							#p $unitcost
+							unitcost = imagesqin * uicost
 							break
 
 						end
@@ -427,7 +425,7 @@ class TemplatesController < ApplicationController
 
 					if frame_mat_stretch_sku == itemcode
 
-						$unitcost = (uicost * total_ui.to_f) + mountingcost
+						unitcost = (uicost * total_ui.to_f) + mountingcost
 						break
 
 					end
@@ -439,19 +437,18 @@ class TemplatesController < ApplicationController
 			end	
 
 
-			$unitcost = $unitcost.round(3)
+			unitcost = unitcost.round(3)
 
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
 			# If there is no record in InSynch with the same WebOrderId, then populate the database with this record
 			if record.empty?
-				p $unitcost
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
 					:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge, :unitcost => $unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
+					:covering => covering, :edge => edge, :unitcost => unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
 			end
 
 			orders_line += 1
