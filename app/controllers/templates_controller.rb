@@ -272,183 +272,185 @@ class TemplatesController < ApplicationController
 		while !orders_export[orders_line].nil? do
 			
 			weborderid = orders_export[orders_line].weborderid
-			salesorderno = orders_export[orders_line].salesorderno
-			sequenceno = orders_export[orders_line].sequenceno
-			
-			itemcode = orders_export[orders_line].itemcode
-			itemcodedesc = orders_export[orders_line].itemcodedesc
-			itemtype = orders_export[orders_line].itemtype
-			quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
-			originalunitprice = orders_export[orders_line].originalunitprice
-			dropship = "Y"
-
-			substrate = orders_export[orders_line].substrate
-			width = orders_export[orders_line].width
-			height = orders_export[orders_line].length
-			
-			border = orders_export[orders_line].border
-			fs = orders_export[orders_line].fs
-			embellish = orders_export[orders_line].embellish
-			wrap = orders_export[orders_line].wrap
-			link = orders_export[orders_line].link
-
-			covering = orders_export[orders_line].covering
-			edge = orders_export[orders_line].edge
-
-			total_ui = width.to_i + height.to_i
-
-			# Info needed to retrieve the correct UI cost: image source, sku
-
-			image_ui = width.to_i + height.to_i
-			fsm_width = 0
-			fsm_height = 0
-
-			if width.include?('.')
-				fsm_width = truncate_digits(width.to_f, 2)
-			else
-				fsm_width = 0
-			end
-
-			if height.include?('.')
-				fsm_height = truncate_digits(height.to_f, 2)
-			else
-				fsm_height = 0
-			end
-
-			udf_imsource = ""
-  			udf_ratiodec = ""
-  			udf_entitytype = ""
-
-			db_connection_production.fetch("SELECT udf_imsource, udf_ratiodec, udf_entitytype FROM im1_inventorymasterfile WHERE itemnumber = ?", itemcode) do |row|
-	  			udf_imsource = row[:udf_imsource]
-	  			udf_ratiodec = row[:udf_ratiodec].to_f
-	  			udf_entitytype = row[:udf_entitytype]
-			end
-
-
-			# Scan each line in the correct retail master sheet
-			retail_line = 0
-			retail_substrate = ""
-
-			if !substrate.blank?
-				retail_substrate = substrate
-			end
-
-			if !covering.blank?
-				retail_substrate = covering
-			end
-
-			if !edge.blank?
-				retail_substrate = edge
-			end
-
-			#p retail_substrate
-
-			# Select the correct retail sheet, depending on the substrate
-			retail_master = pick_retail_sheet(retail_substrate, border)
-
-			#p "1"
-			#p udf_entitytype
-
-			while !retail_master[retail_line].nil? do
-
-				#p "2"
-				#p udf_entitytype
-
-				# If Poster or digital Paper
-				if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
-
-					imagesource = retail_master[retail_line].imagesource
-					ratiodec = retail_master[retail_line].ratiodec.to_f
-					ui = retail_master[retail_line].ui.to_f
-					imagesqin = retail_master[retail_line].imagesqin.to_f
-					rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
-
-					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-						if imagesource != "Old World"
-
-							unitcost = ui * rolledpapertaruicost
-							break
-
-						else
-
-							unitcost = imagesqin * rolledpapertaruicost
-							break
-
-						end
-
-					end
-				end
-
-
-				# If digital canvas
-				if udf_entitytype == "Image" and substrate == "CV"
-
-					#p "Image test"
-
-					imagesource = retail_master[retail_line].imagesource
-					ratiodec = retail_master[retail_line].ratiodec.to_f
-					imagesqin = retail_master[retail_line].imagesqin.to_f
-					
-					ui = retail_master[retail_line].ui.to_f
-					uicost = retail_master[retail_line].uicost.to_f
-					
-					#p uicost
-						
-					if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
-
-						if imagesource != "Old World"
-
-							unitcost = ui * uicost
-							break
-
-						else
-
-							unitcost = imagesqin * uicost
-							break
-
-						end
-
-					end
-
-				end
-
-				#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
-				if retail_substrate == "AR" or retail_substrate == "ST"
-
-					#p "FRAME"
-
-					frame_mat_stretch_sku = retail_master[retail_line].sku
-					uicost = retail_master[retail_line].uicost.to_f
-					mountingcost = retail_master[retail_line].mountingcost.to_f
-
-					if frame_mat_stretch_sku == itemcode
-
-						unitcost = (uicost * total_ui.to_f) + mountingcost
-						break
-
-					end
-
-				end
-
-				retail_line = retail_line + 1
-
-			end	
-
-
-			unitcost = unitcost.round(3)
-
-			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
 			# If there is no record in InSynch with the same WebOrderId, then populate the database with this record
 			if record.empty?
+
+				salesorderno = orders_export[orders_line].salesorderno
+				sequenceno = orders_export[orders_line].sequenceno
+				
+				itemcode = orders_export[orders_line].itemcode
+				itemcodedesc = orders_export[orders_line].itemcodedesc
+				itemtype = orders_export[orders_line].itemtype
+				quantityorderedoriginal = orders_export[orders_line].quantityorderedoriginal
+				originalunitprice = orders_export[orders_line].originalunitprice
+				dropship = "Y"
+
+				substrate = orders_export[orders_line].substrate
+				width = orders_export[orders_line].width
+				height = orders_export[orders_line].length
+				
+				border = orders_export[orders_line].border
+				fs = orders_export[orders_line].fs
+				embellish = orders_export[orders_line].embellish
+				wrap = orders_export[orders_line].wrap
+				link = orders_export[orders_line].link
+
+				covering = orders_export[orders_line].covering
+				edge = orders_export[orders_line].edge
+
+				total_ui = width.to_i + height.to_i
+
+				# Info needed to retrieve the correct UI cost: image source, sku
+
+				image_ui = width.to_i + height.to_i
+				fsm_width = 0
+				fsm_height = 0
+
+				if width.include?('.')
+					fsm_width = truncate_digits(width.to_f, 2)
+				else
+					fsm_width = 0
+				end
+
+				if height.include?('.')
+					fsm_height = truncate_digits(height.to_f, 2)
+				else
+					fsm_height = 0
+				end
+
+				udf_imsource = ""
+	  			udf_ratiodec = ""
+	  			udf_entitytype = ""
+
+				db_connection_production.fetch("SELECT udf_imsource, udf_ratiodec, udf_entitytype FROM im1_inventorymasterfile WHERE itemnumber = ?", itemcode) do |row|
+		  			udf_imsource = row[:udf_imsource]
+		  			udf_ratiodec = row[:udf_ratiodec].to_f
+		  			udf_entitytype = row[:udf_entitytype]
+				end
+
+
+				# Scan each line in the correct retail master sheet
+				retail_line = 0
+				retail_substrate = ""
+
+				if !substrate.blank?
+					retail_substrate = substrate
+				end
+
+				if !covering.blank?
+					retail_substrate = covering
+				end
+
+				if !edge.blank?
+					retail_substrate = edge
+				end
+
+				#p retail_substrate
+
+				# Select the correct retail sheet, depending on the substrate
+				retail_master = pick_retail_sheet(retail_substrate, border)
+
+				#p "1"
+				#p udf_entitytype
+
+				while !retail_master[retail_line].nil? do
+
+					#p "2"
+					#p udf_entitytype
+
+					# If Poster or digital Paper
+					if udf_entitytype == "Poster" or (udf_entitytype == "Image" and substrate == "PR")
+
+						imagesource = retail_master[retail_line].imagesource
+						ratiodec = retail_master[retail_line].ratiodec.to_f
+						ui = retail_master[retail_line].ui.to_f
+						imagesqin = retail_master[retail_line].imagesqin.to_f
+						rolledpapertaruicost = retail_master[retail_line].rolledpapertaruicost.to_f
+
+						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+							if imagesource != "Old World"
+
+								unitcost = ui * rolledpapertaruicost
+								break
+
+							else
+
+								unitcost = imagesqin * rolledpapertaruicost
+								break
+
+							end
+
+						end
+					end
+
+
+					# If digital canvas
+					if udf_entitytype == "Image" and substrate == "CV"
+
+						#p "Image test"
+
+						imagesource = retail_master[retail_line].imagesource
+						ratiodec = retail_master[retail_line].ratiodec.to_f
+						imagesqin = retail_master[retail_line].imagesqin.to_f
+						
+						ui = retail_master[retail_line].ui.to_f
+						uicost = retail_master[retail_line].uicost.to_f
+						
+						#p uicost
+							
+						if imagesource == udf_imsource and ratiodec == udf_ratiodec and ui == image_ui
+
+							if imagesource != "Old World"
+
+								unitcost = ui * uicost
+								break
+
+							else
+
+								unitcost = imagesqin * uicost
+								break
+
+							end
+
+						end
+
+					end
+
+					#if udf_entitytype == "Frame" or udf_entitytype == "Stretch" or udf_entitytype == "Mat"
+					if retail_substrate == "AR" or retail_substrate == "ST"
+
+						#p "FRAME"
+
+						frame_mat_stretch_sku = retail_master[retail_line].sku
+						uicost = retail_master[retail_line].uicost.to_f
+						mountingcost = retail_master[retail_line].mountingcost.to_f
+
+						if frame_mat_stretch_sku == itemcode
+
+							unitcost = (uicost * total_ui.to_f) + mountingcost
+							break
+
+						end
+
+					end
+
+					retail_line = retail_line + 1
+
+				end	
+
+
+				unitcost = unitcost.round(3)
+
+				# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
+				
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
-					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
-					:substrate => substrate,
-					:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
-					:covering => covering, :edge => edge, :unitcost => unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
+						:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
+						:substrate => substrate,
+						:width => width.to_i, :height => height.to_i, :border => border, :fs => fs, :embellish => embellish, :wrap => wrap, :link => link,
+						:covering => covering, :edge => edge, :unitcost => unitcost, :fsm_width => fsm_width, :fsm_height => fsm_height)
 			end
 
 			orders_line += 1
