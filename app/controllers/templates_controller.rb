@@ -267,6 +267,7 @@ class TemplatesController < ApplicationController
 
 
 		orders_line = 0
+		$unitcost = 0
 
 		while !orders_export[orders_line].nil? do
 			
@@ -327,7 +328,6 @@ class TemplatesController < ApplicationController
 
 			# Scan each line in the correct retail master sheet
 			retail_line = 0
-			$unitcost = 0
 			retail_substrate = ""
 
 			if !substrate.blank?
@@ -441,15 +441,12 @@ class TemplatesController < ApplicationController
 
 			$unitcost = $unitcost.round(3)
 
-			if $unitcost != 0
-				p $unitcost
-			end
-
 			# Check if the sales order number is not already there. If not, insert the new record, otherwise update it
 			record = com_frommas_so_salesorderhisthdr.where(:weborderid => weborderid)
 
 			# If there is no record in InSynch with the same WebOrderId, then populate the database with this record
 			if record.empty?
+				p $unitcost
 				com_tomas_so_salesorderdetl.insert(:salesorderno => salesorderno, :sequenceno => sequenceno, :itemcode => itemcode, :itemcodedesc => itemcodedesc, 
 					:itemtype => itemtype, :quantityorderedoriginal => quantityorderedoriginal, :originalunitprice => originalunitprice, :dropship => dropship,
 					:substrate => substrate,
