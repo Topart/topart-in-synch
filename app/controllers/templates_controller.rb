@@ -56,7 +56,7 @@ class TemplatesController < ApplicationController
 
 		# Copy the csv file localy through HTTP
 		open('orders_export.csv', 'wb') do |file|
-  			csv_content << open('http://topartco.nextmp.net/orders_export/ToMAS_SO_SalesOrderHeader.csv').read
+  			csv_content << open('http://topart.com/orders_export/ToMAS_SO_SalesOrderHeader.csv').read
 		end
 
 		file_name = "ToMAS_SO_SalesOrderHeader.csv";
@@ -191,27 +191,27 @@ class TemplatesController < ApplicationController
 		open(retail_file_name, 'wb') do |file|
 
 			if sku_code == "PR"
-  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_paper.csv').read
+  				retail_csv_content << open('http://topart.com/orders_export/retail_master_paper.csv').read
   			end
 
   			if sku_code == "CV"
 
   				if treatment_code == "WH"
-	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_wh_border.csv').read
+	  				retail_csv_content << open('http://topart.com/orders_export/retail_master_canvas_wh_border.csv').read
   				end
 
   				if treatment_code == "BL"
-	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_bl_border.csv').read
+	  				retail_csv_content << open('http://topart.com/orders_export/retail_master_canvas_bl_border.csv').read
   				end
 
   				if treatment_code == "MR"
-	  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_canvas_mr_border.csv').read
+	  				retail_csv_content << open('http://topart.com/orders_export/retail_master_canvas_mr_border.csv').read
   				end
   			end
 
   			if sku_code == "AR" or sku_code == "ST" or sku_code == "GL"
 
-  				retail_csv_content << open('http://topartco.nextmp.net/orders_export/retail_master_framing_matting_stretching.csv').read
+  				retail_csv_content << open('http://topart.com/orders_export/retail_master_framing_matting_stretching.csv').read
 
   			end
 		end
@@ -236,7 +236,7 @@ class TemplatesController < ApplicationController
 
 		# Copy the csv file localy through HTTP
 		open('ToMas_SO_SalesOrderDetail.csv', 'wb') do |file|
-  			csv_content << open('http://topartco.nextmp.net/orders_export/ToMas_SO_SalesOrderDetail.csv').read
+  			csv_content << open('http://topart.com/orders_export/ToMas_SO_SalesOrderDetail.csv').read
 		end
 
 		file_name = "ToMas_SO_SalesOrderDetail.csv";
