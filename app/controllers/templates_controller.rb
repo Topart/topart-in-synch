@@ -55,7 +55,7 @@ class TemplatesController < ApplicationController
 		csv_content = ""
 
 		# Copy the csv file localy through HTTP
-		open('orders_export.csv', 'wb') do |file|
+		open('ToMAS_SO_SalesOrderHeader.csv', 'wb') do |file|
   			csv_content << open('http://topart.com/orders_export/ToMAS_SO_SalesOrderHeader.csv').read
 		end
 
