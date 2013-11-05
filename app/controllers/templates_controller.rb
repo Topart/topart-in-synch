@@ -140,7 +140,7 @@ class TemplatesController < ApplicationController
 				end
 
 				# Map the shipping info
-				if shipvia == "Delivery option - Fedex Groud"
+				if shipvia == "Delivery option - Fedex Ground"
 					shipvia = "FE GROUND"
 				end
 
@@ -158,8 +158,10 @@ class TemplatesController < ApplicationController
 
 				# Map the ARDivision info
 				if ardivisionno == "NOT LOGGED IN" or ardivisionno == "General"
-					ardivisionno = "00"
+					#ardivisionno = "00"
 				end
+				ardivisionno = "00"
+				
 				# Got to add the retail (01) and trade (02) divisions
 
 				com_tomas_so_salesorderhdr.insert(:salesorderno => salesorderno, :orderdate => orderdate, :emailaddress => emailaddress, :ardivisionno => ardivisionno,
