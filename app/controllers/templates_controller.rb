@@ -140,7 +140,7 @@ class TemplatesController < ApplicationController
 				end
 
 				# Map the shipping info
-				if shipvia == "Delivery option - Fedex Ground"
+				if shipvia == "Delivery option - Fedex Ground" or shipvia == "Delivery option - Fedex Groud"
 					shipvia = "FE GROUND"
 				end
 
